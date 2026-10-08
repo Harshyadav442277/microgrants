@@ -6,11 +6,11 @@ Updated: **8 October 2026**.
 | --- | --- | --- |
 | Idea | Not selected | Owner decides later; complete [PRD](../PRD.md) after selection |
 | Requirements | Detail page verified | [RULES](../RULES.md); recheck before submission |
-| Local repository | Initialized on `main` | Scaffold prepared for owner review |
-| GitHub repository | Created private | [Harshyadav442277/arc-microgrants](https://github.com/Harshyadav442277/arc-microgrants) |
+| Local repository | Scaffold committed on `main` | Implementation revision `948e7748478131272c24c6275a8db4809f6e95e3`; verification notes recorded separately |
+| GitHub repository | Created; private visibility verified | [Harshyadav442277/arc-microgrants](https://github.com/Harshyadav442277/arc-microgrants); authenticated metadata: private, size 0, no branches |
 | Upload | Waiting for owner review | No scaffold files pushed |
-| Tooling checks | Pending final verification | Run `npm ci`, `npm run check`, and whitespace checks |
-| Live RPC diagnostics | Pending optional verification | Read-only probes do not imply a product deployment |
+| Tooling checks | Passed locally and from a fresh local clone | `npm ci`, `npm run check`, and whitespace checks; see [EVIDENCE](EVIDENCE.md) |
+| Live RPC diagnostics | Passed on both networks | Testnet chain 5042002; mainnet chain 5042; invalid input and wrong-chain endpoint rejected; no transaction executed |
 | GitHub Actions | Not run | Workflow will be uploaded with the approved scaffold |
 | Application / contracts | Not implemented | Reserved folders only |
 | Local product tests | Not run | No product exists yet |
