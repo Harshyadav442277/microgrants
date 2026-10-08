@@ -2,7 +2,7 @@
 
 Project-neutral repository for [Arc Microgrants | Circle](https://dorahacks.io/hackathon/arc-microgrants/detail). The project idea and application stack are awaiting selection.
 
-**Current state:** local scaffold ready for review; the [GitHub repository](https://github.com/Harshyadav442277/arc-microgrants) is private. Files have not been pushed. See [STATUS](docs/STATUS.md) for verification evidence.
+**Current state:** the reviewed scaffold is uploaded to the [private GitHub repository](https://github.com/Harshyadav442277/arc-microgrants). The idea is still awaiting selection. See [STATUS](docs/STATUS.md) for verification evidence.
 
 ## Program essentials
 
@@ -66,4 +66,4 @@ Use one `main` branch. Keep source facts and unresolved decisions explicit. Upda
 
 Local secrets, generated artifacts, and assistant continuity notes are ignored. `.env.example` contains public defaults only. No open-source license has been selected; `package.json` is marked `UNLICENSED` until the owner decides.
 
-**Push gate:** the owner reviews this local scaffold first. After approval, rerun `npm run check` and `git diff --check`, inspect the staged files, then push `main` to the existing private remote. Repository visibility changes, mainnet spending, and program submission are separate decisions.
+The owner authorized the scaffold push on 8 October 2026. For future updates, rerun `npm run check` and `git diff --check` and inspect staged files before pushing `main` to the private remote. Repository visibility changes, mainnet spending, and program submission are separate decisions.

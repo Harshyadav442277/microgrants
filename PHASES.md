@@ -4,7 +4,7 @@ Deadline: **15 October 2026, 09:29 IST**. Dates below are internal targets as of
 
 | Phase | Deliverable | Exit gate | Current state |
 | --- | --- | --- | --- |
-| 0. Preparation | Private repo, verified requirements, neutral tooling and documentation | Local checks pass; owner reviews scaffold | Awaiting review |
+| 0. Preparation | Private repo, verified requirements, neutral tooling and documentation | Local checks pass; owner reviews scaffold | Reviewed; uploaded |
 | 1. Idea and feasibility | Filled PRD, status quo, criterion mapping, smallest experiment | Owner selects idea; evidence supports feasibility | Not started |
 | 2. Narrow implementation | One complete core journey and needed Arc integration | Meaningful tests and local demo pass | Not started |
 | 3. Testnet rehearsal | End-to-end journey on the intended wallet/contract/service setup | Exact outputs and relevant failure cases verified | Not started |
@@ -21,8 +21,8 @@ Deadline: **15 October 2026, 09:29 IST**. Dates below are internal targets as of
 
 If idea selection is delayed, cut features before cutting verification. Do not count this schedule as a promise of completion or assume any available hours or budget.
 
-## Current review gate
+## Completed scaffold review
 
-The private GitHub repository can exist empty during review. Local commits are allowed; uploading the scaffold waits for the owner's review. Keep one `main` branch and push only reviewed files. Publishing source, executing mainnet transactions, and submitting an entry require their own owner decisions.
+The owner authorized the scaffold push on 8 October 2026, and the files are uploaded to the private repository. Keep one `main` branch. Publishing source, executing mainnet transactions, and submitting an entry require their own owner decisions.
 
 Progress and evidence live in [STATUS](docs/STATUS.md), [GAPS](GAPS.md), and [EVIDENCE](docs/EVIDENCE.md).
