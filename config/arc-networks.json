@@ -1,0 +1,21 @@
+{
+  "verifiedOn": "2026-10-08",
+  "source": "https://docs.arc.io/arc/references/connect-to-arc",
+  "defaultNetwork": "testnet",
+  "networks": {
+    "testnet": {
+      "name": "Arc Testnet",
+      "chainId": 5042002,
+      "rpcUrl": "https://rpc.testnet.arc.io",
+      "explorerUrl": "https://explorer.testnet.arc.io",
+      "nativeCurrency": { "name": "USDC", "symbol": "USDC", "decimals": 18 }
+    },
+    "mainnet": {
+      "name": "Arc",
+      "chainId": 5042,
+      "rpcUrl": "https://rpc.mainnet.arc.io",
+      "explorerUrl": "https://explorer.arc.io",
+      "nativeCurrency": { "name": "USDC", "symbol": "USDC", "decimals": 18 }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+# Dependencies and generated output
+node_modules/
+.next/
+dist/
+build/
+coverage/
+out/
+cache/
+artifacts/
+broadcast/
+*.log
+*.tsbuildinfo
+__pycache__/
+.venv/
+
+# Local configuration and credentials
+.env*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+keystore/
+wallets/
+secrets/
+
+# Local editor, assistant, and continuity files
+.vscode/
+.idea/
+.codex/
+.claude/
+/CLAUDE.md
+/AGENTS.md
+/MEMORY.md
+/.local/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
