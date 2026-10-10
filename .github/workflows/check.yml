@@ -22,6 +22,7 @@ jobs:
           node-version-file: .node-version
       - run: npm ci --ignore-scripts
       - run: npm run check
+      - run: npm run build:web
       - run: git diff --check
 
   contracts:
