@@ -8,6 +8,7 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 | --- | --- | --- | --- | --- |
 | `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` | **Active.** Owner-created hackathon wallet: Arc Lab deployer and `LabRegistry` owner (instructor), testnet and mainnet | Logged 10 Oct 2026 18:54 UTC / 11 Oct 00:24 IST | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored) | **Key exposed:** pasted in chat ~19:03 UTC. Rotation recommended; owner decided at ~19:08 UTC to keep using it. Keep only the minimum mainnet USDC in it. 20 testnet USDC at 19:09 UTC |
 | `0x239F2fa36A461a477d92336a65A56164a188fF4C` | Unused. Generated locally as a replacement, then dropped at the owner's request | Generated 10 Oct 2026 19:04 UTC | Key overwritten in `.env.local`; not kept | Never funded |
+| `0xebE745F1b0DCa4cE79993b81f603538864cD1d51` | Testnet-only learner for `scripts/run-journey.mjs` (controlled by the builder, not a user) | Generated locally 10 Oct 2026 19:19 UTC; key written straight to `.env.local` | `.env.local` as `LEARNER_PRIVATE_KEY` | Never to be used on mainnet. 0.0012 test-USDC left at 19:24 UTC |
 | `0x7b4a0Cb81cd4a0D12A89F23aeec110574afd997a` | Superseded; not used by Arc Lab. Owner replaced it with a hackathon-specific wallet | Logged 10 Oct 2026 18:50 UTC | Not held by this project | Balance 0, nonce 0 at 18:50 UTC; never funded or used here |
 
 ## Open as of 10 October 2026
@@ -17,6 +18,7 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 | Idea | Closed: owner selected Arc Lab on 10 Oct | — |
 | Do reviewers fund education/tooling labs? | Unknown; no recipients announced; owner accepted the risk by selecting | — |
 | Deployer funding and key | Wallet logged above; unfunded; `.env.local` created from the example, key line empty. Needed: testnet USDC (faucet.circle.com), then a few mainnet USDC | Owner, before testnet deploy |
+| Drip size | 0.05 USDC covered both PASSes plus one FAIL on testnet (E18); ran out before a second FAIL. Proposal for mainnet: 0.1 USDC per learner (both challenges cost ≈0.031 at 20 gwei) | Owner, before mainnet enrolment |
 | Mainnet spend estimate | Measured on testnet (E16): deployment used 3,142,497 gas (dry run estimated 4,108,837), ≈ 0.063 USDC at the 20 gwei mainnet floor. Plus 0.05 USDC drip per learner and 0.0001 USDC checker float | Owner yes before mainnet |
 | Browser SLH-DSA signing time | Untested in a browser (≈2 s in Node) | Web page build |
 | Arc Foundry | Closed: v0.8.0-2 installed in WSL with owner's yes; tests run on the Arc EVM (E15) | — |

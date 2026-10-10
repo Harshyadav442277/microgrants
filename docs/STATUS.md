@@ -18,7 +18,7 @@ Updated: **10 October 2026**.
 | CI | Arc Foundry contract job added | Not yet run on GitHub: the branch is not pushed |
 | Mainnet simulation | Matches expectations | E13: real Arc USDC and precompile via `eth_call`, nothing sent |
 | Web page | Not started | Challenge pages, in-browser signing, submit, board |
-| Testnet product | Contracts deployed 10 Oct (E16) | Registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`; learner journey not yet run |
+| Testnet product | Deployed, source verified, learner journey passed (E16–E18) | Registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`; enrol → drip → PASS both → FAIL recorded |
 | Mainnet product | Not deployed | Needs idea, tested implementation, wallet, and budget |
 | Public demo | None | Requires deployment |
 | Submission | Not submitted | [Checklist](SUBMISSION.md) remains open |
