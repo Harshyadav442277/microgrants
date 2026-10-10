@@ -6,8 +6,8 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 
 | Address | Purpose | Created / logged | Key location | State |
 | --- | --- | --- | --- | --- |
-| `0x239F2fa36A461a477d92336a65A56164a188fF4C` | **Active.** Arc Lab deployer and `LabRegistry` owner (instructor), testnet rehearsal and mainnet. Replaces the compromised wallet below | Generated locally 10 Oct 2026 19:04 UTC / 11 Oct 00:34 IST; key written straight to `.env.local`, never displayed | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored); never in chat, commits or logs | EOA; balance 0 and nonce 0 on testnet and mainnet at 19:05 UTC |
-| `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` | **Compromised, never fund or use.** Owner-created hackathon wallet | Logged 10 Oct 2026 18:54 UTC | Private key was pasted in chat on 10 Oct 2026 ~19:03 UTC; not stored by this project | Balance 0 and nonce 0 at 18:54 UTC; rotated before any funds |
+| `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` | **Active.** Owner-created hackathon wallet: Arc Lab deployer and `LabRegistry` owner (instructor), testnet and mainnet | Logged 10 Oct 2026 18:54 UTC / 11 Oct 00:24 IST | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored) | **Key exposed:** pasted in chat ~19:03 UTC. Rotation recommended; owner decided at ~19:08 UTC to keep using it. Keep only the minimum mainnet USDC in it. 20 testnet USDC at 19:09 UTC |
+| `0x239F2fa36A461a477d92336a65A56164a188fF4C` | Unused. Generated locally as a replacement, then dropped at the owner's request | Generated 10 Oct 2026 19:04 UTC | Key overwritten in `.env.local`; not kept | Never funded |
 | `0x7b4a0Cb81cd4a0D12A89F23aeec110574afd997a` | Superseded; not used by Arc Lab. Owner replaced it with a hackathon-specific wallet | Logged 10 Oct 2026 18:50 UTC | Not held by this project | Balance 0, nonce 0 at 18:50 UTC; never funded or used here |
 
 ## Open as of 10 October 2026

@@ -34,6 +34,6 @@ Updated: **10 October 2026**.
 
 ## Next action
 
-Owner: fund the logged deployer wallet `0x239F2fa36A461a477d92336a65A56164a188fF4C` with testnet USDC (faucet.circle.com); its key is already in `.env.local`; mainnet USDC comes later, after a cost estimate. Then: deploy the registry and checkers on testnet, run the journey as real transactions, build the web page, deploy to mainnet. Target submission 13 October (IST); deadline 15 October 03:59 UTC / 09:29 IST.
+Owner: deploy from the logged wallet `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` (20 testnet USDC); mainnet USDC comes later, after a cost estimate. Then: deploy the registry and checkers on testnet, run the journey as real transactions, build the web page, deploy to mainnet. Target submission 13 October (IST); deadline 15 October 03:59 UTC / 09:29 IST.
 
 Read-only mainnet checks done on 10 October (no transactions sent): the SLH-DSA verifier precompile, Memo with sender preserved, EIP-2612 and EIP-3009 on Arc USDC, deployed ERC-4337 and CREATE2 infrastructure, and the 20 gwei fee floor.
