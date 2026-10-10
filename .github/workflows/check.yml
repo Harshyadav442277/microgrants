@@ -23,3 +23,27 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run check
       - run: git diff --check
+
+  contracts:
+    # Arc Foundry, not foundry-rs/foundry-toolchain: stock Foundry would run these tests under Ethereum rules.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ARC_FOUNDRY_VERSION: v0.8.0-2
+      ARC_FOUNDRY_SHA256: 088bdb96a84418b757f9825d491e702792f1d1d1e29a9145af305a6600a79556
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Arc Foundry from the verified release archive
+        run: |
+          f="arc-foundry-${ARC_FOUNDRY_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          curl -fsSL -o "$f" "https://github.com/circlefin/arc-foundry/releases/download/${ARC_FOUNDRY_VERSION}/$f"
+          echo "${ARC_FOUNDRY_SHA256}  $f" | sha256sum -c -
+          mkdir -p arc-foundry "$HOME/.local/bin"
+          tar -xzf "$f" -C arc-foundry
+          install -m 755 arc-foundry/forge "$HOME/.local/bin/arc-forge"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Fork tests on Arc testnet
+        working-directory: contracts
+        run: arc-forge test
