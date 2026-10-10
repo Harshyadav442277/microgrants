@@ -1,6 +1,29 @@
 # Gaps and ranked risks
 
-Last updated: **8 October 2026**. Idea selection remains with the owner. This list names blockers rather than treating scaffold completion as grant eligibility.
+Last updated: **11 October 2026 (IST)**. This list names blockers rather than treating scaffold completion as grant eligibility.
+
+## Wallets (burners only)
+
+| Address | Purpose | Created / logged | Key location | State |
+| --- | --- | --- | --- | --- |
+| `0x7b4a0Cb81cd4a0D12A89F23aeec110574afd997a` | Arc Lab deployer and `LabRegistry` owner (instructor), testnet rehearsal and mainnet | Created by the owner; logged 10 Oct 2026 18:50 UTC / 11 Oct 00:20 IST | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored); never in chat, commits or logs | EOA; balance 0 and nonce 0 on testnet and mainnet at 18:50 UTC |
+
+## Open as of 10 October 2026
+
+| Gap | State | Resolve by |
+| --- | --- | --- |
+| Idea | Closed: owner selected Arc Lab on 10 Oct | — |
+| Do reviewers fund education/tooling labs? | Unknown; no recipients announced; owner accepted the risk by selecting | — |
+| Deployer funding and key | Wallet logged above; unfunded; key not yet in `.env.local`. Needed: testnet USDC (faucet.circle.com), then a few mainnet USDC | Owner, before testnet deploy |
+| Mainnet spend estimate | Guess, not measured: 3 contract deployments (~1.5–3M gas ≈ 0.03–0.06 USDC at 20 gwei) + 0.05 USDC drip per learner + checker float 0.0001 USDC | Measure on testnet |
+| Browser SLH-DSA signing time | Untested in a browser (≈2 s in Node) | Web page build |
+| Arc Foundry (`arc-forge`) | Not installed (Linux/WSL binary; download needs owner yes). Stock Foundry 1.8.1 + mocks used; whether stock `forge create` deploys cleanly on Arc is untested | Testnet deploy |
+| CI runs only repository checks | Contract tests not in GitHub Actions yet | Before freeze |
+| Source license | Contracts marked `UNLICENSED` | Owner, before going public |
+| External-model critique of the chosen idea | Not run (HF out of credit, GitHub Models blocked locally, `claude` CLI login expired) | Before freeze |
+| Real learners for the lab | None recruited | 12 October |
+| Circle Gas Station on Arc mainnet works as documented | Docs say supported; not tested | Only if a sponsorship feature is built |
+| Number of grants already awarded | Not visible anywhere | Submit early regardless |
 
 | Rank | Risk / gap | Consequence | Resolution |
 | --- | --- | --- | --- |

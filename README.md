@@ -1,8 +1,19 @@
 # Arc Microgrants workspace
 
-Project-neutral repository for [Arc Microgrants | Circle](https://dorahacks.io/hackathon/arc-microgrants/detail). The project idea and application stack are awaiting selection.
+**Arc Lab**: a graded lab for [Arc](https://docs.arc.io/). Each challenge is one thing Arc does differently from Ethereum; checker contracts on Arc grade each learner's deployment and record the result on-chain. Built for [Arc Microgrants | Circle](https://dorahacks.io/hackathon/arc-microgrants/detail).
 
-**Current state:** the reviewed scaffold is uploaded to the [private GitHub repository](https://github.com/Harshyadav442277/arc-microgrants). The idea is still awaiting selection. See [STATUS](docs/STATUS.md) for verification evidence.
+**Current state:** contracts written, 21 local tests passing, and the full grading run simulated against Arc mainnet state with nothing sent. Not deployed yet. See [PRD](PRD.md) and [STATUS](docs/STATUS.md).
+
+## Contracts
+
+Requires [Foundry](https://getfoundry.sh/) (tested with 1.8.1) and Node.js 24.
+
+```sh
+cd contracts && forge test
+cd contracts && forge build && cd .. && node scripts/simulate-mainnet.mjs
+```
+
+The simulation runs the registry, both checkers and sample solutions inside one `eth_call` on Arc mainnet. It needs no wallet and spends nothing.
 
 ## Program essentials
 
@@ -33,7 +44,7 @@ npm ci
 npm run check
 ```
 
-No third-party packages are installed. Checks validate required files, local Markdown link targets, network configuration, and a limited set of accidental credential/file patterns. They do not prove application correctness or replace a security review.
+Checks validate required files, local Markdown link targets, network configuration, and a limited set of accidental credential/file patterns. They do not prove application correctness or replace a security review.
 
 Optional, read-only RPC checks:
 
@@ -52,13 +63,13 @@ PRD.md / ARCHITECTURE.md / PHASES.md / GAPS.md / DEMO.md
 docs/                 Setup, status, submission, and evidence
 config/               Dated Arc network configuration
 scripts/              Repository and read-only RPC checks
-src/                  Reserved for application code after idea selection
-contracts/            Reserved if custom contracts are actually needed
-tests/                Reserved for meaningful application/contract tests
+contracts/            Arc Lab contracts (src/) and Foundry tests (test/)
+src/                  Reserved for the web page
+tests/                Reserved for end-to-end tests
 .github/workflows/    Repository checks for main and pull requests
 ```
 
-The three code folders contain placeholders only. There is no product, contract, deployment, AI integration, database, or wallet implementation yet.
+There is no web page, deployment or wallet yet.
 
 ## Shared workflow
 
