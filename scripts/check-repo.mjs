@@ -8,7 +8,7 @@ const required = [
   'README.md', 'RULES.md', 'PRD.md', 'ARCHITECTURE.md', 'PHASES.md', 'GAPS.md', 'DEMO.md',
   'docs/ARC_SETUP.md', 'docs/SUBMISSION.md', 'docs/STATUS.md', 'docs/EVIDENCE.md',
   'config/arc-networks.json', '.env.example', '.gitignore', '.github/workflows/check.yml',
-  'src/.gitkeep', 'contracts/.gitkeep', 'tests/.gitkeep',
+  'src/.gitkeep', 'tests/.gitkeep',
 ];
 const errors = [];
 const fail = (message) => errors.push(message);
