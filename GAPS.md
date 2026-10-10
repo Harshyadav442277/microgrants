@@ -6,7 +6,8 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 
 | Address | Purpose | Created / logged | Key location | State |
 | --- | --- | --- | --- | --- |
-| `0x7b4a0Cb81cd4a0D12A89F23aeec110574afd997a` | Arc Lab deployer and `LabRegistry` owner (instructor), testnet rehearsal and mainnet | Created by the owner; logged 10 Oct 2026 18:50 UTC / 11 Oct 00:20 IST | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored); never in chat, commits or logs | EOA; balance 0 and nonce 0 on testnet and mainnet at 18:50 UTC |
+| `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` | **Active.** Created by the owner for this hackathon only: Arc Lab deployer and `LabRegistry` owner (instructor), testnet rehearsal and mainnet | Logged 10 Oct 2026 18:54 UTC / 11 Oct 00:24 IST | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored); never in chat, commits or logs | EOA; balance 0 and nonce 0 on testnet and mainnet at 18:54 UTC |
+| `0x7b4a0Cb81cd4a0D12A89F23aeec110574afd997a` | Superseded; not used by Arc Lab. Owner replaced it with a hackathon-specific wallet | Logged 10 Oct 2026 18:50 UTC | Not held by this project | Balance 0, nonce 0 at 18:50 UTC; never funded or used here |
 
 ## Open as of 10 October 2026
 
