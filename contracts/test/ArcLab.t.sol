@@ -4,12 +4,21 @@ pragma solidity 0.8.30;
 import {LabRegistry} from "../src/LabRegistry.sol";
 import {VaultChecker} from "../src/checkers/VaultChecker.sol";
 import {PostQuantumChecker} from "../src/checkers/PostQuantumChecker.sol";
-import {vm, MockArcUsdc, MockPq} from "./ArcMocks.sol";
+import {PQ_CHECKER, PQ_LEARNER, PQ_VK, PQ_SIG} from "./PqFixture.sol";
 import "./Solutions.sol";
 
+interface Vm {
+    function deal(address who, uint256 newBalance) external;
+    function prank(address sender) external;
+    function expectRevert(bytes4 revertData) external;
+    function expectRevert(bytes calldata revertData) external;
+}
+
+Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
+
+/// Fork tests: run with Arc Foundry against Arc testnet (see contracts/foundry.toml), so Arc USDC and the
+/// SLH-DSA precompile are the real ones. Stock Foundry would run them under Ethereum rules.
 contract ArcLabTest {
-    address constant USDC = 0x3600000000000000000000000000000000000000;
-    address constant PQ = 0x1800000000000000000000000000000000000004;
     uint256 constant DRIP = 0.05 ether; // 0.05 USDC in native 18-decimal units
 
     LabRegistry registry;
@@ -25,9 +34,7 @@ contract ArcLabTest {
     bytes sig;
 
     function setUp() public {
-        vm.etch(USDC, address(new MockArcUsdc()).code);
-        vm.etch(PQ, address(new MockPq()).code);
-
+        require(block.chainid == 5042002, "run with arc-forge (Arc Foundry); it forks Arc testnet");
         registry = new LabRegistry(DRIP);
         vaultChecker = new VaultChecker();
         pqChecker = new PostQuantumChecker();
@@ -35,9 +42,9 @@ contract ArcLabTest {
         vaultId = registry.addChallenge(vaultChecker);
         pqId = registry.addChallenge(pqChecker);
 
-        vk = _bytes(32, 7);
-        sig = _bytes(7856, 9);
-        MockPq(PQ).allow(vk, pqChecker.message(alice), sig);
+        require(address(pqChecker) == PQ_CHECKER && alice == PQ_LEARNER, "fixture stale: node scripts/make-pq-fixture.mjs");
+        vk = PQ_VK;
+        sig = PQ_SIG;
     }
 
     receive() external payable {}
@@ -102,14 +109,19 @@ contract ArcLabTest {
     // ---------- Books that balance ----------
 
     function testGoodVaultPasses() public {
-        _expectVault(address(new GoodVault(alice)), true, vaultChecker.OK());
+        address s = address(new GoodVault(alice));
+        uint256 float = address(vaultChecker).balance;
+        _expectVault(s, true, vaultChecker.OK());
         _true(registry.solved(alice, vaultId), "solved");
+        _eq(address(vaultChecker).balance, float, "checker float unchanged");
+        _eq(s.balance, 0, "vault untouched");
     }
 
     function testGoodVaultPassesAfterStrangerSendsDust() public {
         address s = address(new GoodVault(alice));
         vm.deal(s, 123);
         _expectVault(s, true, vaultChecker.OK());
+        _eq(s.balance, 123, "dust untouched");
     }
 
     function testLedgerVaultMissesTokenCredit() public {
@@ -152,6 +164,10 @@ contract ArcLabTest {
 
     function testLengthOnlyVerifierFails() public {
         _expectPq(alice, address(new LengthVerifier(alice)), sig, false, pqChecker.ACCEPTED_TAMPERED());
+    }
+
+    function testValidSignatureVerifiesOnPrecompile() public view {
+        _true(pqChecker.PQ().verifySlhDsaSha2128s(vk, pqChecker.message(alice), sig), "fixture verifies on Arc");
     }
 
     function testInvalidLearnerSignatureFails() public {

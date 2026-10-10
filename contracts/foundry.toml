@@ -1,3 +1,5 @@
+# Built and tested with Arc Foundry (arc-forge), which executes under Arc's own EVM rules. Stock Foundry
+# would run the same tests under Ethereum rules, so the tests refuse to run unless the chain is Arc testnet.
 [profile.default]
 src = "src"
 test = "test"
@@ -7,3 +9,7 @@ solc_version = "0.8.30"
 evm_version = "osaka"
 # MainnetScenario (test/) runs on a real chain, so `new X` must compile to plain CREATE.
 dynamic_test_linking = false
+network = "arc"
+# Tests fork Arc testnet at a pinned block: the real USDC system contract and precompiles are used.
+eth_rpc_url = "https://rpc.testnet.arc.io"
+fork_block_number = 66523112

@@ -2,7 +2,7 @@
 // The MainnetScenario constructor runs inside eth_call from a throwaway sender with a balance override,
 // so real Arc USDC and the real SLH-DSA precompile do the work. Nothing is deployed and no gas is paid.
 //
-// Usage: forge build (in contracts/), then
+// Usage: arc-forge build (in contracts/), then
 //   node scripts/simulate-mainnet.mjs [--network=mainnet|testnet] [--out=<forge out dir>]
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';

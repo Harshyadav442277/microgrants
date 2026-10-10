@@ -11,8 +11,9 @@
   "scripts": {
     "check": "node scripts/check-repo.mjs",
     "check:arc": "node scripts/check-arc.mjs",
-    "test:contracts": "cd contracts && forge test",
-    "simulate": "node scripts/simulate-mainnet.mjs"
+    "test:contracts": "cd contracts && arc-forge test",
+    "simulate": "node scripts/simulate-mainnet.mjs",
+    "pq-fixture": "node scripts/make-pq-fixture.mjs"
   },
   "dependencies": {
     "@noble/post-quantum": "0.7.1",
