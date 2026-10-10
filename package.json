@@ -13,10 +13,16 @@
     "check:arc": "node scripts/check-arc.mjs",
     "test:contracts": "cd contracts && arc-forge test",
     "simulate": "node scripts/simulate-mainnet.mjs",
-    "pq-fixture": "node scripts/make-pq-fixture.mjs"
+    "pq-fixture": "node scripts/make-pq-fixture.mjs",
+    "build:web": "node scripts/build-web.mjs",
+    "test:e2e": "node --env-file=.env.local node_modules/@playwright/test/cli.js test"
   },
   "dependencies": {
     "@noble/post-quantum": "0.7.1",
     "viem": "2.56.9"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "esbuild": "0.28.2"
   }
 }

@@ -1,0 +1,139 @@
+{
+  "vault": {
+    "name": "StarterVault",
+    "abi": [
+      {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "learner_",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "deposit",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "deposited",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "learner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "totalAssets",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "withdrawAll",
+        "inputs": [
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address payable"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      }
+    ],
+    "bytecode": "0x608060405234801561000f575f5ffd5b506040516106f13803806106f1833981810160405281019061003191906100d4565b805f5f6101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550506100ff565b5f5ffd5b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6100a38261007a565b9050919050565b6100b381610099565b81146100bd575f5ffd5b50565b5f815190506100ce816100aa565b92915050565b5f602082840312156100e9576100e8610076565b5b5f6100f6848285016100c0565b91505092915050565b6105e58061010c5f395ff3fe608060405260043610610049575f3560e01c806301e1d1141461004d57806397ad9f8614610077578063d0e30db0146100a1578063eef49ee3146100ab578063fa09e630146100d5575b5f5ffd5b348015610058575f5ffd5b506100616100fd565b60405161006e91906102c5565b60405180910390f35b348015610082575f5ffd5b5061008b610106565b604051610098919061031d565b60405180910390f35b6100a961012a565b005b3480156100b6575f5ffd5b506100bf610144565b6040516100cc91906102c5565b60405180910390f35b3480156100e0575f5ffd5b506100fb60048036038101906100f69190610375565b61014a565b005b5f600154905090565b5f5f9054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b3460015f82825461013b91906103cd565b92505081905550565b60015481565b5f60018190555073360000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff1663a9059cbb8273360000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff166370a08231306040518263ffffffff1660e01b81526004016101cf919061031d565b602060405180830381865afa1580156101ea573d5f5f3e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061020e919061042a565b6040518363ffffffff1660e01b815260040161022b9291906104b0565b6020604051808303815f875af1158015610247573d5f5f3e3d5ffd5b505050506040513d601f19601f8201168201806040525081019061026b919061050c565b6102aa576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016102a190610591565b60405180910390fd5b50565b5f819050919050565b6102bf816102ad565b82525050565b5f6020820190506102d85f8301846102b6565b92915050565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f610307826102de565b9050919050565b610317816102fd565b82525050565b5f6020820190506103305f83018461030e565b92915050565b5f5ffd5b5f610344826102de565b9050919050565b6103548161033a565b811461035e575f5ffd5b50565b5f8135905061036f8161034b565b92915050565b5f6020828403121561038a57610389610336565b5b5f61039784828501610361565b91505092915050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601160045260245ffd5b5f6103d7826102ad565b91506103e2836102ad565b92508282019050808211156103fa576103f96103a0565b5b92915050565b610409816102ad565b8114610413575f5ffd5b50565b5f8151905061042481610400565b92915050565b5f6020828403121561043f5761043e610336565b5b5f61044c84828501610416565b91505092915050565b5f819050919050565b5f61047861047361046e846102de565b610455565b6102de565b9050919050565b5f6104898261045e565b9050919050565b5f61049a8261047f565b9050919050565b6104aa81610490565b82525050565b5f6040820190506104c35f8301856104a1565b6104d060208301846102b6565b9392505050565b5f8115159050919050565b6104eb816104d7565b81146104f5575f5ffd5b50565b5f81519050610506816104e2565b92915050565b5f6020828403121561052157610520610336565b5b5f61052e848285016104f8565b91505092915050565b5f82825260208201905092915050565b7f7472616e73666572206661696c656400000000000000000000000000000000005f82015250565b5f61057b600f83610537565b915061058682610547565b602082019050919050565b5f6020820190508181035f8301526105a88161056f565b905091905056fea264697066735822122018855c608706adba4428e499dee31fc4bfa11cb6bfedab6bdcc3ccc9026912a964736f6c634300081e0033",
+    "source": "// SPDX-License-Identifier: UNLICENSED\npragma solidity 0.8.30;\n\ninterface IUsdc {\n    function transfer(address to, uint256 value) external returns (bool);\n    function balanceOf(address account) external view returns (uint256);\n}\n\n/// Arc Lab starter for \"Books that balance\". It compiles, deploys, and fails the checker on purpose.\n/// Deploy it with your own address as `learner_`, submit it, read why it fails, fix it, and submit your fix.\ncontract StarterVault {\n    IUsdc constant USDC = IUsdc(0x3600000000000000000000000000000000000000); // Arc USDC, 6 decimals\n\n    address public learner;\n    uint256 public deposited; // native units, 18 decimals\n\n    constructor(address learner_) {\n        learner = learner_;\n    }\n\n    function deposit() external payable {\n        deposited += msg.value;\n    }\n\n    /// Everything the vault holds, in native units (18 decimals).\n    function totalAssets() external view returns (uint256) {\n        return deposited;\n    }\n\n    /// Pays everything the vault holds to `to`.\n    function withdrawAll(address payable to) external {\n        deposited = 0;\n        require(USDC.transfer(to, USDC.balanceOf(address(this))), \"transfer failed\");\n    }\n}\n"
+  },
+  "verifier": {
+    "name": "StarterVerifier",
+    "abi": [
+      {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "learner_",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "learner",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "verify",
+        "inputs": [
+          {
+            "name": "vk",
+            "type": "bytes",
+            "internalType": "bytes"
+          },
+          {
+            "name": "message",
+            "type": "bytes",
+            "internalType": "bytes"
+          },
+          {
+            "name": "sig",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "pure"
+      }
+    ],
+    "bytecode": "0x608060405234801561000f575f5ffd5b506040516103b43803806103b4833981810160405281019061003191906100d4565b805f5f6101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550506100ff565b5f5ffd5b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6100a38261007a565b9050919050565b6100b381610099565b81146100bd575f5ffd5b50565b5f815190506100ce816100aa565b92915050565b5f602082840312156100e9576100e8610076565b5b5f6100f6848285016100c0565b91505092915050565b6102a88061010c5f395ff3fe608060405234801561000f575f5ffd5b5060043610610034575f3560e01c806397ad9f8614610038578063de8f50a114610056575b5f5ffd5b610040610086565b60405161004d919061010d565b60405180910390f35b610070600480360381019061006b919061018f565b6100aa565b60405161007d9190610259565b60405180910390f35b5f5f9054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b5f6020878790501480156100c25750611eb083839050145b90509695505050505050565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6100f7826100ce565b9050919050565b610107816100ed565b82525050565b5f6020820190506101205f8301846100fe565b92915050565b5f5ffd5b5f5ffd5b5f5ffd5b5f5ffd5b5f5ffd5b5f5f83601f84011261014f5761014e61012e565b5b8235905067ffffffffffffffff81111561016c5761016b610132565b5b60208301915083600182028301111561018857610187610136565b5b9250929050565b5f5f5f5f5f5f606087890312156101a9576101a8610126565b5b5f87013567ffffffffffffffff8111156101c6576101c561012a565b5b6101d289828a0161013a565b9650965050602087013567ffffffffffffffff8111156101f5576101f461012a565b5b61020189828a0161013a565b9450945050604087013567ffffffffffffffff8111156102245761022361012a565b5b61023089828a0161013a565b92509250509295509295509295565b5f8115159050919050565b6102538161023f565b82525050565b5f60208201905061026c5f83018461024a565b9291505056fea26469706673582212202bcf6b2af9d889ed5239446c77b84e147cd59160a18a0fc92485cdec42ad719b64736f6c634300081e0033",
+    "source": "// SPDX-License-Identifier: UNLICENSED\npragma solidity 0.8.30;\n\n/// Arc Lab starter for \"Post-quantum signature\". It compiles, deploys, and fails the checker on purpose.\n/// Deploy it with your own address as `learner_`, submit it with your signature, read why it fails, fix it,\n/// and submit your fix. Arc verifies SLH-DSA-SHA2-128s signatures in a precompile; see the Arc docs.\ncontract StarterVerifier {\n    address public learner;\n\n    constructor(address learner_) {\n        learner = learner_;\n    }\n\n    /// True only if `sig` is a valid SLH-DSA-SHA2-128s signature of `message` under public key `vk`.\n    function verify(bytes calldata vk, bytes calldata message, bytes calldata sig) external pure returns (bool) {\n        message;\n        return vk.length == 32 && sig.length == 7856;\n    }\n}\n"
+  }
+}
