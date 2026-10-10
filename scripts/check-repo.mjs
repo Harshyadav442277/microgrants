@@ -75,7 +75,7 @@ try {
   }
 } catch { fail('Invalid package or network configuration.'); }
 
-for (const script of ['scripts/check-repo.mjs', 'scripts/check-arc.mjs']) {
+for (const script of ['scripts/check-repo.mjs', 'scripts/check-arc.mjs', 'scripts/simulate-mainnet.mjs']) {
   const result = spawnSync(process.execPath, ['--check', path.join(root, script)], { encoding: 'utf8' });
   if (result.status !== 0) fail('JavaScript syntax check failed: ' + script);
 }

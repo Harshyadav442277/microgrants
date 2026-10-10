@@ -1,8 +1,8 @@
 {
-  "name": "arc-microgrants-scaffold",
+  "name": "arc-lab",
   "version": "0.0.0",
   "private": true,
-  "description": "Project-neutral Arc Microgrants preparation and repository tooling.",
+  "description": "Arc Lab: on-chain graded challenges for Arc-specific behaviour.",
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
@@ -10,6 +10,12 @@
   },
   "scripts": {
     "check": "node scripts/check-repo.mjs",
-    "check:arc": "node scripts/check-arc.mjs"
+    "check:arc": "node scripts/check-arc.mjs",
+    "test:contracts": "cd contracts && forge test",
+    "simulate": "node scripts/simulate-mainnet.mjs"
+  },
+  "dependencies": {
+    "@noble/post-quantum": "0.7.1",
+    "viem": "2.56.9"
   }
 }
