@@ -1,0 +1,12 @@
+{
+  "testnet": {
+    "chainId": 5042002,
+    "deployedAtBlock": 66525365,
+    "owner": "0x87E6832fB971A29b4228Ccf6A558f27822c063ED",
+    "registry": "0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1",
+    "challenges": [
+      { "id": 0, "name": "Books that balance", "checker": "0x73a3c3FA009767E8515F39E852764bdcdBBa540a" },
+      { "id": 1, "name": "Post-quantum signature", "checker": "0x54db435c807a89A2cC1209012431C465dd541323" }
+    ]
+  }
+}
