@@ -4,6 +4,16 @@
 
 **Current state:** contracts written, 21 local tests passing, and the full grading run simulated against Arc mainnet state with nothing sent. Not deployed yet. See [PRD](PRD.md) and [STATUS](docs/STATUS.md).
 
+## Web page
+
+The page in `src/` lets a learner connect a wallet, deploy each starter contract, submit any contract for grading and read the explanation, and shows a results board built from the registry's events. The instructor panel appears for the registry owner.
+
+```sh
+npm run build:web                 # bundles into dist/
+node scripts/serve.mjs dist 4174  # http://127.0.0.1:4174/?network=testnet
+npm run test:e2e                  # full journey on Arc testnet; needs .env.local (see DEMO.md)
+```
+
 ## Contracts
 
 Requires [Arc Foundry](https://github.com/circlefin/arc-foundry) (`arc-forge`, tested with v0.8.0-2; Linux, macOS or WSL) and Node.js 24. Stock Foundry is not enough: it would run the tests under Ethereum rules, so the config rejects it.
@@ -63,13 +73,14 @@ PRD.md / ARCHITECTURE.md / PHASES.md / GAPS.md / DEMO.md
 docs/                 Setup, status, submission, and evidence
 config/               Dated Arc network configuration
 scripts/              Repository and read-only RPC checks
-contracts/            Arc Lab contracts (src/) and Foundry tests (test/)
-src/                  Reserved for the web page
-tests/                Reserved for end-to-end tests
+contracts/            Arc Lab contracts (src/), deploy script (script/) and Arc Foundry tests (test/)
+src/                  The web page
+tests/e2e/            Playwright journey test
+config/deployments.json  Deployed addresses per network
 .github/workflows/    Repository checks for main and pull requests
 ```
 
-There is no web page, deployment or wallet yet.
+Deployed on Arc testnet only; see [STATUS](docs/STATUS.md).
 
 ## Shared workflow
 

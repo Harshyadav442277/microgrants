@@ -18,9 +18,11 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 | Idea | Closed: owner selected Arc Lab on 10 Oct | — |
 | Do reviewers fund education/tooling labs? | Unknown; no recipients announced; owner accepted the risk by selecting | — |
 | Deployer funding and key | Wallet logged above; unfunded; `.env.local` created from the example, key line empty. Needed: testnet USDC (faucet.circle.com), then a few mainnet USDC | Owner, before testnet deploy |
-| Drip size | 0.05 USDC covered both PASSes plus one FAIL on testnet (E18); ran out before a second FAIL. Proposal for mainnet: 0.1 USDC per learner (both challenges cost ≈0.031 at 20 gwei) | Owner, before mainnet enrolment |
+| Drip size | Testnet raised to 0.1 USDC (E19); the full page journey with two FAILs used 0.068 (E20). Use 0.1 on mainnet | Owner yes with the mainnet deployment |
 | Mainnet spend estimate | Measured on testnet (E16): deployment used 3,142,497 gas (dry run estimated 4,108,837), ≈ 0.063 USDC at the 20 gwei mainnet floor. Plus 0.05 USDC drip per learner and 0.0001 USDC checker float | Owner yes before mainnet |
-| Browser SLH-DSA signing time | Untested in a browser (≈2 s in Node) | Web page build |
+| Browser SLH-DSA signing time | Works in Chromium (E20); time not yet recorded (the test now prints it). Untested on phones and in a real wallet extension | Next e2e run; manual check with MetaMask |
+| Real wallet extension | Page tested only through a Node bridge, not MetaMask or another extension | Manual run before submission |
+| Hosting | Page not hosted; Vercel CLI present, project not created | Owner yes for a public URL |
 | Arc Foundry | Closed: v0.8.0-2 installed in WSL with owner's yes; tests run on the Arc EVM (E15) | — |
 | CI contract job | Added (installs Arc Foundry from the checksummed archive); never run on GitHub | First push of `arc-lab` |
 | Source license | Contracts marked `UNLICENSED` | Owner, before going public |
