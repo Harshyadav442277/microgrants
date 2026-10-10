@@ -4,6 +4,8 @@ pragma solidity 0.8.30;
 import {LabRegistry} from "../src/LabRegistry.sol";
 import {VaultChecker} from "../src/checkers/VaultChecker.sol";
 import {PostQuantumChecker} from "../src/checkers/PostQuantumChecker.sol";
+import {StarterVault} from "../src/starters/StarterVault.sol";
+import {StarterVerifier} from "../src/starters/StarterVerifier.sol";
 import {PQ_CHECKER, PQ_LEARNER, PQ_VK, PQ_SIG} from "./PqFixture.sol";
 import "./Solutions.sol";
 
@@ -145,6 +147,15 @@ contract ArcLabTest {
         _expectVault(address(new ForgingVault(alice)), false, vaultChecker.DEPOSIT_FAILED());
     }
 
+    function testStarterVaultFailsOnTheTokenCreditFirst() public {
+        _expectVault(address(new StarterVault(alice)), false, vaultChecker.WRONG_TOTAL());
+    }
+
+    function testStarterVaultWithTotalFixedThenLeavesDust() public {
+        // The ledger bug fixed, the ERC-20 sweep kept: the second lesson.
+        _expectVault(address(new TokenSweepVault(alice)), false, vaultChecker.LEFT_DUST());
+    }
+
     function testRunCannotBeCalledDirectly() public {
         address s = address(new GoodVault(alice));
         vm.expectRevert(abi.encodeWithSelector(VaultChecker.Result.selector, false, vaultChecker.ABORTED()));
@@ -172,6 +183,10 @@ contract ArcLabTest {
 
     function testValidSignatureVerifiesOnPrecompile() public view {
         _true(pqChecker.PQ().verifySlhDsaSha2128s(vk, pqChecker.message(alice), sig), "fixture verifies on Arc");
+    }
+
+    function testStarterVerifierAcceptsTamperedSignature() public {
+        _expectPq(alice, address(new StarterVerifier(alice)), sig, false, pqChecker.ACCEPTED_TAMPERED());
     }
 
     function testInvalidLearnerSignatureFails() public {
