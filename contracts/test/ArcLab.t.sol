@@ -10,15 +10,18 @@ import "./Solutions.sol";
 interface Vm {
     function deal(address who, uint256 newBalance) external;
     function prank(address sender) external;
+    function createSelectFork(string calldata url, uint256 blockNumber) external returns (uint256);
     function expectRevert(bytes4 revertData) external;
     function expectRevert(bytes calldata revertData) external;
 }
 
 Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
 
-/// Fork tests: run with Arc Foundry against Arc testnet (see contracts/foundry.toml), so Arc USDC and the
-/// SLH-DSA precompile are the real ones. Stock Foundry would run them under Ethereum rules.
+/// Fork tests: run with Arc Foundry against Arc testnet at a pinned block, so Arc USDC and the SLH-DSA
+/// precompile are the real ones. Stock Foundry would run them under Ethereum rules.
 contract ArcLabTest {
+    string constant ARC_TESTNET_RPC = "https://rpc.testnet.arc.io";
+    uint256 constant FORK_BLOCK = 66523112;
     uint256 constant DRIP = 0.05 ether; // 0.05 USDC in native 18-decimal units
 
     LabRegistry registry;
@@ -34,7 +37,8 @@ contract ArcLabTest {
     bytes sig;
 
     function setUp() public {
-        require(block.chainid == 5042002, "run with arc-forge (Arc Foundry); it forks Arc testnet");
+        vm.createSelectFork(ARC_TESTNET_RPC, FORK_BLOCK);
+        require(block.chainid == 5042002, "not on the Arc testnet fork");
         registry = new LabRegistry(DRIP);
         vaultChecker = new VaultChecker();
         pqChecker = new PostQuantumChecker();

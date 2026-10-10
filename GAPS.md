@@ -17,7 +17,8 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 | Idea | Closed: owner selected Arc Lab on 10 Oct | — |
 | Do reviewers fund education/tooling labs? | Unknown; no recipients announced; owner accepted the risk by selecting | — |
 | Deployer funding and key | Wallet logged above; unfunded; `.env.local` created from the example, key line empty. Needed: testnet USDC (faucet.circle.com), then a few mainnet USDC | Owner, before testnet deploy |
-| Mainnet spend estimate | Guess, not measured: 3 contract deployments (~1.5–3M gas ≈ 0.03–0.06 USDC at 20 gwei) + 0.05 USDC drip per learner + checker float 0.0001 USDC | Measure on testnet |
+| Mainnet spend estimate | Testnet dry run of `script/Deploy.s.sol` (10 Oct 19:15 UTC, simulation only): 4,108,837 gas for 3 deployments + float + 2 `addChallenge` (≈0.082 USDC at the 20 gwei floor; the earlier 1.5–3M guess was low). Plus 0.05 USDC drip per learner and 0.0001 USDC checker float. Not yet a mined result | Measure on testnet broadcast |
+| Testnet broadcast blocked | The Claude Code auto-mode classifier denied `--broadcast` as a production deploy (10 Oct 19:16 UTC) | Owner runs the command or allows it |
 | Browser SLH-DSA signing time | Untested in a browser (≈2 s in Node) | Web page build |
 | Arc Foundry | Closed: v0.8.0-2 installed in WSL with owner's yes; tests run on the Arc EVM (E15) | — |
 | CI contract job | Added (installs Arc Foundry from the checksummed archive); never run on GitHub | First push of `arc-lab` |
