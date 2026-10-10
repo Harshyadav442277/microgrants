@@ -6,14 +6,14 @@
 
 ## Contracts
 
-Requires [Foundry](https://getfoundry.sh/) (tested with 1.8.1) and Node.js 24.
+Requires [Arc Foundry](https://github.com/circlefin/arc-foundry) (`arc-forge`, tested with v0.8.0-2; Linux, macOS or WSL) and Node.js 24. Stock Foundry is not enough: it would run the tests under Ethereum rules, so the config rejects it.
 
 ```sh
-cd contracts && forge test
-cd contracts && forge build && cd .. && node scripts/simulate-mainnet.mjs
+cd contracts && arc-forge test
+cd contracts && arc-forge build && cd .. && node scripts/simulate-mainnet.mjs
 ```
 
-The simulation runs the registry, both checkers and sample solutions inside one `eth_call` on Arc mainnet. It needs no wallet and spends nothing.
+The tests fork Arc testnet at a pinned block, so Arc's real USDC system contract and SLH-DSA precompile do the grading; there are no mocks. The simulation runs the registry, both checkers and sample solutions inside one `eth_call` on Arc mainnet. Neither needs a wallet or spends anything.
 
 ## Program essentials
 

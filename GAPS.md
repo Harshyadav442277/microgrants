@@ -15,11 +15,11 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 | --- | --- | --- |
 | Idea | Closed: owner selected Arc Lab on 10 Oct | — |
 | Do reviewers fund education/tooling labs? | Unknown; no recipients announced; owner accepted the risk by selecting | — |
-| Deployer funding and key | Wallet logged above; unfunded; key not yet in `.env.local`. Needed: testnet USDC (faucet.circle.com), then a few mainnet USDC | Owner, before testnet deploy |
+| Deployer funding and key | Wallet logged above; unfunded; `.env.local` created from the example, key line empty. Needed: testnet USDC (faucet.circle.com), then a few mainnet USDC | Owner, before testnet deploy |
 | Mainnet spend estimate | Guess, not measured: 3 contract deployments (~1.5–3M gas ≈ 0.03–0.06 USDC at 20 gwei) + 0.05 USDC drip per learner + checker float 0.0001 USDC | Measure on testnet |
 | Browser SLH-DSA signing time | Untested in a browser (≈2 s in Node) | Web page build |
-| Arc Foundry (`arc-forge`) | Not installed (Linux/WSL binary; download needs owner yes). Stock Foundry 1.8.1 + mocks used; whether stock `forge create` deploys cleanly on Arc is untested | Testnet deploy |
-| CI runs only repository checks | Contract tests not in GitHub Actions yet | Before freeze |
+| Arc Foundry | Closed: v0.8.0-2 installed in WSL with owner's yes; tests run on the Arc EVM (E15) | — |
+| CI contract job | Added (installs Arc Foundry from the checksummed archive); never run on GitHub | First push of `arc-lab` |
 | Source license | Contracts marked `UNLICENSED` | Owner, before going public |
 | External-model critique of the chosen idea | Not run (HF out of credit, GitHub Models blocked locally, `claude` CLI login expired) | Before freeze |
 | Real learners for the lab | None recruited | 12 October |

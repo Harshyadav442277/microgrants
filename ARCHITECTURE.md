@@ -9,7 +9,8 @@ Status: **Arc Lab contracts written and tested locally; web page not started; no
 | `contracts/src/LabRegistry.sol` | Challenge list; instructor enrolment with a one-time native-USDC drip (a failed send skips that learner); `submit` → checker → `Submitted`/`Solved` events |
 | `contracts/src/checkers/VaultChecker.sol` | "Books that balance": tests a learner's vault inside an always-reverting call, so no funds move |
 | `contracts/src/checkers/PostQuantumChecker.sol` | "Post-quantum signature": checks the learner's SLH-DSA signature with the precompile, then their verifier on valid and tampered input |
-| `contracts/test/` | Foundry tests with Arc mocks; sample solutions; `MainnetScenario` for the simulation |
+| `contracts/test/` | Arc Foundry fork tests (Arc testnet, pinned block, no mocks); sample solutions; SLH-DSA signature fixture; `MainnetScenario` for the simulation |
+| `scripts/make-pq-fixture.mjs` | Regenerates the test key and signature when the test's deployment order or learner changes |
 | `scripts/simulate-mainnet.mjs` | Runs `MainnetScenario` as an `eth_call` on Arc: real USDC and precompile, no key, nothing sent |
 
 Trust model: the registry owner can add challenges and spend the drip balance but cannot change a recorded result. Checkers hold no learner funds. A learner can keep the drip without attempting a challenge, so the drip is paid once per address and only to addresses the instructor enrols.

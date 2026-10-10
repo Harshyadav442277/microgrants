@@ -14,7 +14,8 @@ Updated: **10 October 2026**.
 | Live RPC diagnostics | Passed on both networks | Testnet chain 5042002; mainnet chain 5042; invalid input and wrong-chain endpoint rejected; no transaction executed |
 | GitHub Actions | Workflow uploaded | Check the [live workflow runs](https://github.com/Harshyadav442277/arc-microgrants/actions) for results at the current revision |
 | Contracts | Written, not deployed | `contracts/src`: LabRegistry, VaultChecker, PostQuantumChecker |
-| Contract tests | 21/21 pass locally | E14 in [EVIDENCE](EVIDENCE.md); Arc behaviour mocked |
+| Contract tests | 22/22 pass on the Arc EVM | E15 in [EVIDENCE](EVIDENCE.md): Arc Foundry, Arc testnet fork, no mocks |
+| CI | Arc Foundry contract job added | Not yet run on GitHub: the branch is not pushed |
 | Mainnet simulation | Matches expectations | E13: real Arc USDC and precompile via `eth_call`, nothing sent |
 | Web page | Not started | Challenge pages, in-browser signing, submit, board |
 | Testnet product | Not deployed | Rehearse after implementation |
@@ -33,6 +34,6 @@ Updated: **10 October 2026**.
 
 ## Next action
 
-Owner: create a burner deployer wallet, fund it with testnet USDC (faucet.circle.com) and later a few USDC on mainnet, and log it. Then: deploy the registry and checkers on testnet, run the journey as real transactions, build the web page, deploy to mainnet. Target submission 13 October (IST); deadline 15 October 03:59 UTC / 09:29 IST.
+Owner: fund the logged deployer wallet `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` with testnet USDC (faucet.circle.com) and put its key in `.env.local` as `DEPLOYER_PRIVATE_KEY`; mainnet USDC comes later, after a cost estimate. Then: deploy the registry and checkers on testnet, run the journey as real transactions, build the web page, deploy to mainnet. Target submission 13 October (IST); deadline 15 October 03:59 UTC / 09:29 IST.
 
 Read-only mainnet checks done on 10 October (no transactions sent): the SLH-DSA verifier precompile, Memo with sender preserved, EIP-2612 and EIP-3009 on Arc USDC, deployed ERC-4337 and CREATE2 infrastructure, and the 20 gwei fee floor.
