@@ -6,9 +6,10 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 
 | Address | Purpose | Created / logged | Key location | State |
 | --- | --- | --- | --- | --- |
-| `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` | **Active.** Owner-created hackathon wallet: Arc Lab deployer and `LabRegistry` owner (instructor), testnet and mainnet | Logged 10 Oct 2026 18:54 UTC / 11 Oct 00:24 IST | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored) | **Key exposed:** pasted in chat ~19:03 UTC. Rotation recommended; owner decided at ~19:08 UTC to keep using it. Keep only the minimum mainnet USDC in it. 20 testnet USDC at 19:09 UTC |
+| `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` | **Active.** Owner-created hackathon wallet: Arc Lab deployer and `LabRegistry` owner (instructor), testnet and mainnet | Logged 10 Oct 2026 18:54 UTC / 11 Oct 00:24 IST | `.env.local` as `DEPLOYER_PRIVATE_KEY` (git-ignored) | Hackathon-only; keep minimal funds in it and in the registry. Funded on mainnet 11 Oct 17:15 UTC with 1.78 USDC; 1.417 USDC after deployment and 0.3 to the gas fund |
 | `0x239F2fa36A461a477d92336a65A56164a188fF4C` | Unused. Generated locally as a replacement, then dropped at the owner's request | Generated 10 Oct 2026 19:04 UTC | Key overwritten in `.env.local`; not kept | Never funded |
 | `0xebE745F1b0DCa4cE79993b81f603538864cD1d51` | Testnet-only learner for `scripts/run-journey.mjs` (controlled by the builder, not a user) | Generated locally 10 Oct 2026 19:19 UTC; key written straight to `.env.local` | `.env.local` as `LEARNER_PRIVATE_KEY` | Never to be used on mainnet. 0.0012 test-USDC left at 19:24 UTC |
+| `0xa3F12B3E926a309a3AE741e13935B1c0d56DA96A` | Mainnet test learner for the MetaMask journey on the hosted page (controlled by the builder, not a user); labelled in `config/deployments.json` | Created by the owner in MetaMask mobile, logged 11 Oct 2026 18:14 UTC / 23:44 IST | Owner's MetaMask (account `arc-lab-test-learner`); not held by this project | Balance 0, nonce 0 at 18:14 UTC; to be enrolled for a 0.1 USDC drip |
 | `0x7b4a0Cb81cd4a0D12A89F23aeec110574afd997a` | Superseded; not used by Arc Lab. Owner replaced it with a hackathon-specific wallet | Logged 10 Oct 2026 18:50 UTC | Not held by this project | Balance 0, nonce 0 at 18:50 UTC; never funded or used here |
 
 ## Open as of 10 October 2026
@@ -27,7 +28,7 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 | Mainnet funding | Deployer holds 0 mainnet USDC (11 Oct 11:16 UTC) | Owner |
 | Arc Foundry | Closed: v0.8.0-2 installed in WSL with owner's yes; tests run on the Arc EVM (E15) | — |
 | CI contract job | Closed: passing on GitHub (E22) | — |
-| Source license | Contracts marked `UNLICENSED` | Owner, before going public |
+| Source license | Closed: MIT, chosen by the owner on 12 Oct (IST) | — |
 | External-model critique of the chosen idea | Not run (HF out of credit, GitHub Models blocked locally, `claude` CLI login expired) | Before freeze |
 | Real learners for the lab | None recruited | 12 October |
 | Circle Gas Station on Arc mainnet works as documented | Docs say supported; not tested | Only if a sponsorship feature is built |

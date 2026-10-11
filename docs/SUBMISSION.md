@@ -23,7 +23,7 @@ Status: **not ready; not submitted.** Source: [official Arc Microgrants page](ht
 | Who it is for | University blockchain clubs and Arc workshops that want a hands-on exercise with a result that can be checked. |
 | Live deployment URL | https://arc-lab-lemon.vercel.app (Arc mainnet; `?network=testnet` for the rehearsal) |
 | Contracts | Arc mainnet and testnet, same addresses: registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`, checkers `0x73a3c3FA009767E8515F39E852764bdcdBBa540a` and `0x54db435c807a89A2cC1209012431C465dd541323`; source verified (mainnet on Sourcify) |
-| Public source URL | Pending owner decision |
+| Public source URL | https://github.com/Harshyadav442277/microgrants |
 | Builder profile | Owner to choose |
 | Verification | 25 contract tests on the Arc EVM (Arc Foundry, testnet fork, no mocks) passing locally and in GitHub Actions; mainnet `eth_call` simulation; Playwright journey through the page on Arc testnet |
 | Limits to state | Every learner so far is a builder-controlled test wallet, labelled as such on the board. Tested in Chromium through a wallet bridge, not yet with MetaMask or on a phone. Public Arc RPC and explorer rate-limit bursts; the page backs off and falls back. |
@@ -32,7 +32,7 @@ Status: **not ready; not submitted.** Source: [official Arc Microgrants page](ht
 
 - [x] Mainnet: deploy, verify source (Sourcify), add to `config/deployments.json`, redeploy the page (E25, E26).
 - [ ] Mainnet: owner funds the registry and runs one learner journey with MetaMask; record hashes in [EVIDENCE](EVIDENCE.md).
-- [ ] Repository: review the public content (planning documents, competition notes), choose a license, then make it public.
+- [x] Repository: public content reviewed, MIT license added (owner approved making it public, 12 Oct IST).
 - [ ] Manual check with a real browser wallet (MetaMask) on the hosted page.
 - [ ] Re-read the live program page for changed rules and form fields.
 

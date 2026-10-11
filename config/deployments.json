@@ -17,7 +17,8 @@
       }
     ],
     "builderWallets": {
-      "0x87E6832fB971A29b4228Ccf6A558f27822c063ED": "builder (instructor)"
+      "0x87E6832fB971A29b4228Ccf6A558f27822c063ED": "builder (instructor)",
+      "0xa3F12B3E926a309a3AE741e13935B1c0d56DA96A": "builder test learner (MetaMask)"
     }
   },
   "testnet": {
