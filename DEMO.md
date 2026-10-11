@@ -1,51 +1,35 @@
 # Demo and verification runbook
 
-Status: **scaffold verification only**. The product journey will be written after idea selection. These checks do not demonstrate a submission-eligible application.
+Status: **testnet journey verified end to end (E20); not hosted; not on mainnet yet.**
 
-## Reproduce the scaffold locally
+## The journey
 
-Open a terminal in the repository with Node.js 24.x and Git available.
+| Step | Learner or instructor action | Expected result | Evidence |
+| --- | --- | --- | --- |
+| 1 | Instructor connects the owner wallet, pastes a learner address, presses **Enrol and send gas** | "Enrolled 1 of 1"; the learner receives the drip (0.1 USDC on testnet) | E20 |
+| 2 | Learner connects; header shows the balance in both views (native 18 decimals, token 6 decimals) | Balance 0.1 | E20 |
+| 3 | **Deploy starter vault**, then **Submit for grading** | FAIL: "wrong total", with the Arc explanation; recorded on-chain | E20 |
+| 4 | Learner fixes the vault in their own tools, deploys, submits | PASS; status "Solved" | E20 |
+| 5 | **Create key and sign** (SLH-DSA in the browser), **Deploy starter verifier**, submit | FAIL: "tampered signature accepted" | E20 |
+| 6 | Learner fixes the verifier to call the precompile, deploys, submits | PASS; status "Solved" | E20 |
+| 7 | Anyone opens the page | Results board lists the learner as solved in both, from registry events | E20 |
+
+Failure handling shown in the page: no wallet, wrong network (switch or add Arc), rejected request, not enough gas, someone else's contract (`NotYourSolution`), missing `learner()`, not a contract.
+
+## Reproduce
+
+Requires Node.js 24, [Arc Foundry](https://github.com/circlefin/arc-foundry) (`arc-forge`) and a funded testnet registry owner key in `.env.local` for the transaction steps.
 
 | Step | Command | Expected result |
 | --- | --- | --- |
-| 1 | `node --version` | `v24.x.x` |
-| 2 | `npm ci` | Exit 0; installs no third-party dependencies |
-| 3 | `npm run check` | Exit 0; final line `Repository checks passed.` |
-| 4 | `git diff --check` | Exit 0; no whitespace-error output |
+| 1 | `npm ci` then `npm run check` | `Repository checks passed.` |
+| 2 | `cd contracts && arc-forge test` | 25 passed, 0 failed (forks Arc testnet) |
+| 3 | `cd contracts && arc-forge build`, then `node scripts/simulate-mainnet.mjs` | `Simulation matches expectations.` (mainnet, `eth_call` only) |
+| 4 | `npm run build:web` and `node scripts/serve.mjs dist 4174` | Page at `http://127.0.0.1:4174/?network=testnet` |
+| 5 | `npm run test:e2e` (with `FOUNDRY_OUT` pointing at the forge output) | `1 passed`; spends about 0.1 test USDC from the registry drip plus instructor gas |
 
-`npm ci` can need npm's normal local cache/runtime setup; the actual repository checker makes no network calls. GitHub Actions runs the same offline checker after upload. A workflow file is not evidence of a successful hosted CI run.
-
-## Optional live RPC diagnostics
-
-```sh
-npm run check:arc -- --network=testnet
-npm run check:arc -- --network=mainnet
-```
-
-Expected successful final line:
-
-```text
-Arc testnet RPC verified: chainId=5042002; block=<current block>.
-Arc mainnet RPC verified: chainId=5042; block=<current block>.
-```
-
-The block varies. Each command times out or exits nonzero on unavailable RPC, invalid responses, or mismatched chain ID. A failed diagnostic is an availability/configuration observation, not a failed application transaction. These commands never sign or broadcast.
-
-## Future product demo contract
-
-Fill the following before feature freeze. Use exact input, expected values, and observable states.
-
-| Step | User action / input | Expected output | Evidence |
-| --- | --- | --- | --- |
-| Open the hosted interface | Pending idea/deployment | Ready state and correct network | Pending |
-| Perform the one useful task | Pending PRD | Exact useful result | Pending |
-| Verify Arc contribution | Pending architecture | Correct mainnet state/receipt/read | Pending |
-| Exercise a relevant failure | Pending design | Actionable error without false success | Pending |
-
-Keep the complete journey short enough to repeat. For a web product, verify it end to end in a real browser; add Playwright coverage only for meaningful behavior. For contracts, verify access, value accounting, and relevant failure paths.
+The end-to-end test bridges the page's wallet calls to Node, where viem signs with test keys; the fixed contracts are deployed from Node in place of the learner's Remix or Foundry. It runs against the live testnet, so it fails when the testnet RPC is down.
 
 ## Fresh checkout and outage rehearsal
 
-Before submission, reproduce setup and the complete journey from a clean checkout using documented versions and `.env.example`. Keep credentials outside the clone and record required funding/services. An offline or recorded walkthrough must be explicitly labeled; it can explain the result during outages but cannot replace the program's live mainnet requirement.
-
-Record each check, revision, observed output, and limitation in [EVIDENCE](docs/EVIDENCE.md). Do not present planned tests or a recording as current live functionality.
+Before submission, reproduce the steps above from a clean checkout and repeat the journey on mainnet. A recorded walkthrough must be labelled as one; it cannot replace the live mainnet requirement. Record each check in [EVIDENCE](docs/EVIDENCE.md).

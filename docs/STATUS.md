@@ -1,33 +1,32 @@
 # Project status
 
-Updated: **8 October 2026**.
+Updated: **11 October 2026, 18:45 UTC (12 October, 00:15 IST)**. Deadline 15 October 2026, 03:59 UTC / 09:29 IST.
 
 | Area | State | Evidence / next step |
 | --- | --- | --- |
-| Idea | Not selected | Owner decides later; complete [PRD](../PRD.md) after selection |
-| Requirements | Detail page verified | [RULES](../RULES.md); recheck before submission |
-| Local repository | Scaffold committed on `main` | Implementation revision `948e7748478131272c24c6275a8db4809f6e95e3`; verification notes recorded separately |
-| GitHub repository | Private visibility verified after upload | [Harshyadav442277/arc-microgrants](https://github.com/Harshyadav442277/arc-microgrants); default branch `main` |
-| Upload | Completed after owner authorization on 8 October | Initial scaffold push verified at `cb1043af8ad1e7d4dd1d5c2d250cbf12df04b4c7`; upload status recorded in a follow-up commit |
-| Tooling checks | Passed locally and from a fresh local clone | `npm ci`, `npm run check`, and whitespace checks; see [EVIDENCE](EVIDENCE.md) |
-| Live RPC diagnostics | Passed on both networks | Testnet chain 5042002; mainnet chain 5042; invalid input and wrong-chain endpoint rejected; no transaction executed |
-| GitHub Actions | Workflow uploaded | Check the [live workflow runs](https://github.com/Harshyadav442277/arc-microgrants/actions) for results at the current revision |
-| Application / contracts | Not implemented | Reserved folders only |
-| Local product tests | Not run | No product exists yet |
-| Testnet product | Not deployed | Rehearse after implementation |
-| Mainnet product | Not deployed | Needs idea, tested implementation, wallet, and budget |
-| Public demo | None | Requires deployment |
-| Submission | Not submitted | [Checklist](SUBMISSION.md) remains open |
-| Public-source requirement | Unresolved | Keep repo private now; later owner decision required |
+| Idea | Arc Lab, selected by the owner 10 Oct 2026 | [PRD](../PRD.md) |
+| Requirements | Detail page re-verified 10 Oct 2026 | [RULES](../RULES.md); recheck before submission |
+| Contracts | LabRegistry, VaultChecker, PostQuantumChecker, two starter contracts | `contracts/src` |
+| Contract tests | 25/25 pass on the Arc EVM | E15 in [EVIDENCE](EVIDENCE.md): Arc Foundry, Arc testnet fork, no mocks |
+| Mainnet simulation | Matches expectations | E13: real Arc USDC and precompile via `eth_call`, nothing sent |
+| Testnet deployment | Deployed, source verified | E16, E17. Registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`; drip raised to 0.1 USDC (E19) |
+| Testnet journey (script) | Passed | E18: enrol → drip → PASS both, FAIL recorded |
+| Web page | Built; end-to-end test passes against Arc testnet | E20: Playwright, new learner enrolled from the page, both starters FAIL with explanations, both fixes PASS, board updated |
+| Hosting | Live at [arc-lab-lemon.vercel.app](https://arc-lab-lemon.vercel.app), defaults to Arc mainnet; `?network=testnet` for the rehearsal | E24, E26 |
+| Mainnet deployment | Deployed and source verified (Sourcify, exact match), block 25445558; same addresses as testnet | E25. Fees 0.0624 USDC; deployer holds 1.7175 USDC. Gas fund 0.2 USDC after one enrolment |
+| Mainnet journey (real wallet) | Exercise 1 FAIL recorded through MetaMask mobile | E27. Exercise 2 and PASS solutions not yet run on mainnet |
+| CI | Passing on GitHub | E22: repository checks, page build and 25 Arc Foundry tests |
+| Git | Branch `arc-lab` pushed; PR [#1](https://github.com/Harshyadav442277/microgrants/pull/1) into `main`, not merged | Repo renamed on GitHub to `microgrants` (old name redirects). Backups `arc-lab-backup-20261010`, `arc-lab-backup-20261010b` kept locally, not pushed |
+| Public-source requirement | Owner approved MIT license, merging PR #1 and making the repo public (12 Oct IST) | — |
+| Submission | Not submitted | [Checklist](SUBMISSION.md) |
 
 ## Decisions already established
 
-- Keep the preparation repo private.
-- Let the owner decide the project idea later.
-- Prepare locally for review before pushing; owner authorized the scaffold push on 8 October.
-- Use one `main` branch and a framework-neutral scaffold.
-- Separate scaffold checks, live RPC observations, application behavior, deployment, and submission evidence.
+- Arc Lab is the entry (owner, 10 Oct).
+- Contracts are built and tested with Arc Foundry only; stock Foundry runs Ethereum rules.
+- The deployer wallet `0x87E6832fB971A29b4228Ccf6A558f27822c063ED` is a hackathon-only wallet; keep minimal mainnet funds in it and in the registry it owns.
+- Builder-controlled wallets are labelled on the results board and never presented as learners.
 
 ## Next action
 
-Owner selects the project idea. Complete [PRD](../PRD.md), run the smallest feasibility experiment, and update the architecture and build plan before implementing features. The private scaffold upload is complete.
+Owner: send 0.3–0.5 USDC from the deployer wallet to the registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1` on Arc mainnet (recoverable with `withdraw`), then run one journey on the hosted page with MetaMask and a new learner wallet; Claude labels that wallet as a builder wallet and records the hashes. Owner decisions before submitting: public repo and license, MetaMask check, builder profile, then submit on DoraHacks ([draft](SUBMISSION.md)). Target 13 October (IST).

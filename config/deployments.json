@@ -1,0 +1,56 @@
+{
+  "mainnet": {
+    "chainId": 5042,
+    "deployedAtBlock": 25445558,
+    "owner": "0x87E6832fB971A29b4228Ccf6A558f27822c063ED",
+    "registry": "0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1",
+    "challenges": [
+      {
+        "id": 0,
+        "name": "Books that balance",
+        "checker": "0x73a3c3FA009767E8515F39E852764bdcdBBa540a"
+      },
+      {
+        "id": 1,
+        "name": "Post-quantum signature",
+        "checker": "0x54db435c807a89A2cC1209012431C465dd541323"
+      }
+    ],
+    "builderWallets": {
+      "0x87E6832fB971A29b4228Ccf6A558f27822c063ED": "builder (instructor)",
+      "0xa3F12B3E926a309a3AE741e13935B1c0d56DA96A": "builder test learner (MetaMask)"
+    }
+  },
+  "testnet": {
+    "chainId": 5042002,
+    "deployedAtBlock": 66525365,
+    "owner": "0x87E6832fB971A29b4228Ccf6A558f27822c063ED",
+    "registry": "0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1",
+    "challenges": [
+      {
+        "id": 0,
+        "name": "Books that balance",
+        "checker": "0x73a3c3FA009767E8515F39E852764bdcdBBa540a"
+      },
+      {
+        "id": 1,
+        "name": "Post-quantum signature",
+        "checker": "0x54db435c807a89A2cC1209012431C465dd541323"
+      }
+    ],
+    "builderWallets": {
+      "0x87E6832fB971A29b4228Ccf6A558f27822c063ED": "builder (instructor)",
+      "0xebE745F1b0DCa4cE79993b81f603538864cD1d51": "builder test learner",
+      "0x9771F33eb94f99ddEf59687A7e271C7c534a3409": "builder end-to-end test learner",
+      "0x826f2699953895e4cb2C53aDd3eF6ae6846541eD": "builder end-to-end test learner",
+      "0x235FE8eE032a77b35c769B2C2e507c156258bc21": "builder end-to-end test learner",
+      "0x5ED2bbDD78B3a0b63d0cE84109eFFc06e8da2668": "builder end-to-end test learner",
+      "0x09782a6dc4bab8A84A4D6c17b8DBA3Ad5D23D182": "builder end-to-end test learner",
+      "0x38Be7C970D56f182c75CDCe4bB78cc73Ad2b2FA9": "builder end-to-end test learner",
+      "0xaa5792031024fBC4293b09A5D650C98E8A8E2C06": "builder end-to-end test learner",
+      "0xce95186294D05A7cA7557c3f649246440d5a1782": "builder end-to-end test learner",
+      "0x3cEB687D23A8D7eE2Fb898FcBe0a89917906Df44": "builder end-to-end test learner",
+      "0x474DE1226a269e432CD3797a4Abc62d0970dC4E2": "builder end-to-end test learner"
+    }
+  }
+}

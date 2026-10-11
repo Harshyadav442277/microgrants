@@ -8,7 +8,6 @@ const required = [
   'README.md', 'RULES.md', 'PRD.md', 'ARCHITECTURE.md', 'PHASES.md', 'GAPS.md', 'DEMO.md',
   'docs/ARC_SETUP.md', 'docs/SUBMISSION.md', 'docs/STATUS.md', 'docs/EVIDENCE.md',
   'config/arc-networks.json', '.env.example', '.gitignore', '.github/workflows/check.yml',
-  'src/.gitkeep', 'contracts/.gitkeep', 'tests/.gitkeep',
 ];
 const errors = [];
 const fail = (message) => errors.push(message);
@@ -75,7 +74,7 @@ try {
   }
 } catch { fail('Invalid package or network configuration.'); }
 
-for (const script of ['scripts/check-repo.mjs', 'scripts/check-arc.mjs']) {
+for (const script of ['scripts/check-repo.mjs', 'scripts/check-arc.mjs', 'scripts/simulate-mainnet.mjs', 'scripts/make-pq-fixture.mjs', 'scripts/run-journey.mjs', 'scripts/build-web.mjs', 'scripts/serve.mjs']) {
   const result = spawnSync(process.execPath, ['--check', path.join(root, script)], { encoding: 'utf8' });
   if (result.status !== 0) fail('JavaScript syntax check failed: ' + script);
 }

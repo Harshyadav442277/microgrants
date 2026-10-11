@@ -5,8 +5,8 @@ Deadline: **15 October 2026, 09:29 IST**. Dates below are internal targets as of
 | Phase | Deliverable | Exit gate | Current state |
 | --- | --- | --- | --- |
 | 0. Preparation | Private repo, verified requirements, neutral tooling and documentation | Local checks pass; owner reviews scaffold | Reviewed; uploaded |
-| 1. Idea and feasibility | Filled PRD, status quo, criterion mapping, smallest experiment | Owner selects idea; evidence supports feasibility | Not started |
-| 2. Narrow implementation | One complete core journey and needed Arc integration | Meaningful tests and local demo pass | Not started |
+| 1. Idea and feasibility | Filled PRD, status quo, criterion mapping, smallest experiment | Owner selects idea; evidence supports feasibility | Done 10 Oct: Arc Lab selected; mainnet simulation passed (E13) |
+| 2. Narrow implementation | One complete core journey and needed Arc integration | Meaningful tests and local demo pass | Contracts done (E14); web page not started |
 | 3. Testnet rehearsal | End-to-end journey on the intended wallet/contract/service setup | Exact outputs and relevant failure cases verified | Not started |
 | 4. Mainnet and hosting | Working reviewer-accessible deployment | Owner sets budget and rollout scope; mainnet results verified | Not started |
 | 5. Evidence and submission | Clean public-source plan, reproducible demo, accurate program entry | Owner resolves visibility/declarations and submits; confirmation retained | Not started |

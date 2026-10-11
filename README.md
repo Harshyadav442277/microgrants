@@ -1,69 +1,58 @@
-# Arc Microgrants workspace
+# Arc Lab
 
-Project-neutral repository for [Arc Microgrants | Circle](https://dorahacks.io/hackathon/arc-microgrants/detail). The project idea and application stack are awaiting selection.
+Graded exercises on the things [Arc](https://docs.arc.io/) does differently from Ethereum. A learner deploys a contract, submits its address, and a checker contract on Arc tests it. Pass or fail is written to the chain as an event, so anyone can check a result. Built for [Arc Microgrants | Circle](https://dorahacks.io/hackathon/arc-microgrants/detail).
 
-**Current state:** the reviewed scaffold is uploaded to the [private GitHub repository](https://github.com/Harshyadav442277/arc-microgrants). The idea is still awaiting selection. See [STATUS](docs/STATUS.md) for verification evidence.
+**Live page:** https://arc-lab-lemon.vercel.app (Arc mainnet; add `?network=testnet` for the rehearsal network).
 
-## Program essentials
+## Exercises
 
-Checked against the official program page on **8 October 2026**:
+| Exercise | Arc behaviour it tests | Why it only works on Arc |
+| --- | --- | --- |
+| Books that balance | Native USDC (18 decimals) and the USDC token at `0x3600…0000` (6 decimals) are one balance. A token transfer credits a contract without running its code, and the token view rounds down dust | The checker deposits value both ways and checks the vault reports and pays out every wei |
+| Post-quantum signature | Arc verifies SLH-DSA-SHA2-128s signatures through a precompile at `0x1800…0004` | The learner signs with their own key in the browser; the verifier must call the precompile and reject a tampered signature |
 
-- Submission closes **14 October 2026, 23:59 Eastern Time**, equivalent to **15 October, 03:59 UTC / 09:29 IST**.
-- The program offers twenty grants of **500 USDC**, paid on Arc, with rolling reviews and decisions by 21 October.
-- A working **Arc mainnet** deployment, **public repository**, short project description, and public builder profile are required.
-- Selection considers Arc relevance, technical credibility, build quality, and potential for further development. No numerical weights are published on the page.
+Each exercise ships a deliberately wrong starter contract. Submitting it fails with an explanation of the Arc behaviour it missed; the learner fixes it in Remix or Foundry and submits again. An instructor enrols a class from the same page, and each enrolled learner receives 0.1 USDC for gas, so a learner can start with an empty wallet.
 
-The repository stays private under the current instruction. The public-repository requirement is a submission blocker to resolve later; see [GAPS](GAPS.md). A scaffold or testnet-only demo does not meet the deployment requirement. Details and sources are in [RULES](RULES.md).
+## Deployments
 
-## Review order
+Same addresses on both networks (same deployer, same nonces). Mainnet source verified on Sourcify (exact match).
 
-1. [RULES](RULES.md): requirements, dates, exclusions, unresolved policies.
-2. [PRD](PRD.md): idea-selection brief and feature-to-criterion template.
-3. [ARCHITECTURE](ARCHITECTURE.md): implementation decisions to make after selection.
-4. [PHASES](PHASES.md) and [GAPS](GAPS.md): build gates, time budget, risks.
-5. [DEMO](DEMO.md): exact scaffold checks and future demo acceptance criteria.
-6. [Arc setup](docs/ARC_SETUP.md), [submission checklist](docs/SUBMISSION.md), and [evidence ledger](docs/EVIDENCE.md).
+| Contract | Address |
+| --- | --- |
+| `LabRegistry` | [`0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`](https://repo.sourcify.dev/5042/0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1) |
+| `VaultChecker` | [`0x73a3c3FA009767E8515F39E852764bdcdBBa540a`](https://repo.sourcify.dev/5042/0x73a3c3FA009767E8515F39E852764bdcdBBa540a) |
+| `PostQuantumChecker` | [`0x54db435c807a89A2cC1209012431C465dd541323`](https://repo.sourcify.dev/5042/0x54db435c807a89A2cC1209012431C465dd541323) |
 
-## Run the scaffold
+Arc mainnet, chain 5042, deployed in block 25445558. Transaction hashes, test runs and their limits are in the [evidence ledger](docs/EVIDENCE.md). Every learner on the results board so far is a test wallet controlled by the builder and is labelled as such.
 
-Requires **Node.js 24.x**, npm, and Git. These support repository tooling; they do not decide the eventual application language or framework.
+## How it fits together
+
+- `contracts/src/LabRegistry.sol` lists challenges, enrols learners with a gas drip, and records each submission as a `Submitted(learner, id, solution, passed, code)` event.
+- `contracts/src/checkers/` grade a submitted contract inside a call that is reverted afterwards, so grading moves no money.
+- `contracts/src/starters/` are the deliberately wrong starting points.
+- `src/` is a static page (viem, `@noble/post-quantum`) that deploys starters, submits, explains verdicts and builds the results board from the registry's events. No server.
+
+More detail: [ARCHITECTURE](ARCHITECTURE.md) and [PRD](PRD.md).
+
+## Run it
+
+Requires Node.js 24 and [Arc Foundry](https://github.com/circlefin/arc-foundry) (`arc-forge`, tested with v0.8.0-2; Linux, macOS or WSL). Stock Foundry runs Ethereum rules, so the config rejects it.
 
 ```sh
 npm ci
-npm run check
+npm run check                     # repository checks
+cd contracts && arc-forge test    # 25 tests on the Arc EVM, forking Arc testnet; no mocks
+npm run build:web                 # bundles the page into dist/
+node scripts/serve.mjs dist 4174  # http://127.0.0.1:4174/
+npm run test:e2e                  # full learner journey on Arc testnet; needs .env.local (see DEMO.md)
 ```
 
-No third-party packages are installed. Checks validate required files, local Markdown link targets, network configuration, and a limited set of accidental credential/file patterns. They do not prove application correctness or replace a security review.
+`node scripts/simulate-mainnet.mjs` (after `arc-forge build`) runs the registry, both checkers and sample solutions inside one `eth_call` on Arc mainnet, spending nothing.
 
-Optional, read-only RPC checks:
+## Status and limits
 
-```sh
-npm run check:arc -- --network=testnet
-npm run check:arc -- --network=mainnet
-```
+See [STATUS](docs/STATUS.md). Known limits: tested with MetaMask mobile and Chromium; the public Arc RPC and explorer rate-limit bursts, which the page backs off from; no outside learners yet.
 
-These request only chain ID and latest block number. They do not connect a wallet, sign, deploy, or transfer funds. RPC availability and observed blocks are separate from any future project deployment.
+## License
 
-## Repository layout
-
-```text
-README.md / RULES.md
-PRD.md / ARCHITECTURE.md / PHASES.md / GAPS.md / DEMO.md
-docs/                 Setup, status, submission, and evidence
-config/               Dated Arc network configuration
-scripts/              Repository and read-only RPC checks
-src/                  Reserved for application code after idea selection
-contracts/            Reserved if custom contracts are actually needed
-tests/                Reserved for meaningful application/contract tests
-.github/workflows/    Repository checks for main and pull requests
-```
-
-The three code folders contain placeholders only. There is no product, contract, deployment, AI integration, database, or wallet implementation yet.
-
-## Shared workflow
-
-Use one `main` branch. Keep source facts and unresolved decisions explicit. Update the planning documents when the idea is selected; add only dependencies needed by that idea. Every major feature needs a selection-criterion mapping and observable acceptance evidence.
-
-Local secrets, generated artifacts, and assistant continuity notes are ignored. `.env.example` contains public defaults only. No open-source license has been selected; `package.json` is marked `UNLICENSED` until the owner decides.
-
-The owner authorized the scaffold push on 8 October 2026. For future updates, rerun `npm run check` and `git diff --check` and inspect staged files before pushing `main` to the private remote. Repository visibility changes, mainnet spending, and program submission are separate decisions.
+[MIT](LICENSE). The mainnet contracts were verified from source carrying the earlier `UNLICENSED` header; the code is otherwise identical.

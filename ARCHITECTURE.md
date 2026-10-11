@@ -1,6 +1,24 @@
 # Architecture decisions
 
-Status: **application architecture pending idea selection**. The current executable code is repository tooling only. No application framework or backend provider is selected.
+Status: **contracts and web page built and tested; deployed on Arc testnet; not on mainnet; page not hosted.**
+
+## Arc Lab components
+
+| Component | Role |
+| --- | --- |
+| `contracts/src/LabRegistry.sol` | Challenge list; instructor enrolment with a one-time native-USDC drip (a failed send skips that learner); `submit` → checker → `Submitted`/`Solved` events |
+| `contracts/src/checkers/VaultChecker.sol` | "Books that balance": tests a learner's vault inside an always-reverting call, so no funds move |
+| `contracts/src/checkers/PostQuantumChecker.sol` | "Post-quantum signature": checks the learner's SLH-DSA signature with the precompile, then their verifier on valid and tampered input |
+| `contracts/test/` | Arc Foundry fork tests (Arc testnet, pinned block, no mocks); sample solutions; SLH-DSA signature fixture; `MainnetScenario` for the simulation |
+| `contracts/src/starters/` | Deliberately wrong starter contracts the page deploys for learners to fix |
+| `contracts/script/Deploy.s.sol` | Deploys and wires the registry and checkers |
+| `src/` | Static page (viem + @noble/post-quantum, bundled by esbuild): wallet, starters, in-browser SLH-DSA signing, submission with explanations, results board from events, instructor panel |
+| `tests/e2e/` | Playwright journey test against Arc testnet with a Node-side wallet bridge |
+| `config/deployments.json` | Deployed addresses and labelled builder wallets per network |
+| `scripts/make-pq-fixture.mjs` | Regenerates the test key and signature when the test's deployment order or learner changes |
+| `scripts/simulate-mainnet.mjs` | Runs `MainnetScenario` as an `eth_call` on Arc: real USDC and precompile, no key, nothing sent |
+
+Trust model: the registry owner can add challenges and spend the drip balance but cannot change a recorded result. Checkers hold no learner funds. A learner can keep the drip without attempting a challenge, so the drip is paid once per address and only to addresses the instructor enrols.
 
 ## Existing scaffold
 
@@ -16,9 +34,9 @@ Status: **application architecture pending idea selection**. The current executa
 
 | Decision | Current position | Selection trigger |
 | --- | --- | --- |
-| User interface | Undecided | Choose web, CLI, or infrastructure interface to match the beneficiary |
-| Application language/framework | Undecided | Choose the smallest reproducible implementation after the experiment |
-| Custom contracts | Optional | Use only if existing Arc primitives cannot deliver the selected result |
+| User interface | Static web page, no backend | Built 10 Oct; results come from on-chain events |
+| Application language/framework | Solidity 0.8.30 + Foundry for contracts; viem for scripts | Decided 10 Oct |
+| Custom contracts | Required | On-chain grading is the product |
 | Wallet model | Undecided | Establish custody, signing, user consent, and funding needs |
 | Backend/storage | Optional | Add only if the core journey needs durable offchain state |
 | AI/model/API | Optional | Prove usefulness, data rights, budget, and failure behavior first |
