@@ -20,7 +20,8 @@ const chain = {
   rpcUrls: { default: { http: [net.rpcUrl] } },
   blockExplorers: { default: { name: 'Arc Explorer', url: net.explorerUrl } },
 };
-const pub = createPublicClient({ chain, transport: http(net.rpcUrl) });
+// The public Arc RPC rate-limits bursts (code -32005); back off for seconds, not milliseconds.
+const pub = createPublicClient({ chain, transport: http(net.rpcUrl, { retryCount: 5, retryDelay: 1000 }) });
 const builder = Object.fromEntries(Object.entries(dep.builderWallets ?? {}).map(([a, l]) => [a.toLowerCase(), l]));
 
 const registryAbi = parseAbi([
@@ -85,7 +86,10 @@ function explain(err) {
     if (/insufficient funds|exceeds allowance|exceeds balance/i.test(err.message)) {
       return `Not enough USDC for gas. ${netName === 'testnet' ? 'Get test USDC at faucet.circle.com, or ask' : 'Ask'} your instructor to enrol you.`;
     }
-    return err.shortMessage;
+    if (/exceeds defined limit|rate limit|too many requests/i.test(`${err.details} ${err.message}`)) {
+      return `The Arc RPC refused the request for now (${err.details ?? 'limit'}). Wait a few seconds and try again.`;
+    }
+    return err.details ? `${err.shortMessage} ${err.details}` : err.shortMessage;
   }
   return err?.message ?? String(err);
 }
@@ -282,15 +286,67 @@ function tryDecode(log) {
 }
 
 // ---------- board ----------
+// The public RPC caps eth_getLogs at 10,000 blocks, so the full history comes from the explorer's API in one
+// request, merged with the latest 10,000 blocks from the RPC (which the explorer may not have indexed yet).
+// If the explorer is unavailable, the whole range is read from the RPC in 10,000-block chunks.
+const RPC_SPAN = 10_000n;
+
+async function explorerLogs() {
+  const seen = new Set();
+  const logs = [];
+  for (let page = 1; page <= 50; page++) {
+    const url = `${net.explorerUrl}/api?module=logs&action=getLogs&address=${dep.registry}` +
+      `&fromBlock=${dep.deployedAtBlock}&toBlock=latest&page=${page}&offset=1000`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`explorer HTTP ${res.status}`);
+    const json = await res.json();
+    if (json.status !== '1') {
+      if (/no (records|logs) found/i.test(json.message ?? '')) break;
+      throw new Error(`explorer: ${json.message}`);
+    }
+    let added = 0;
+    for (const l of json.result) {
+      const key = `${l.transactionHash}:${BigInt(l.logIndex)}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      added++;
+      logs.push({ topics: l.topics.filter(Boolean), data: l.data, blockNumber: BigInt(l.blockNumber), key });
+    }
+    if (json.result.length < 1000 || !added) break;
+  }
+  return logs;
+}
+
+async function rpcLogs(fromBlock, latest) {
+  const logs = [];
+  for (let from = fromBlock; from <= latest; from += RPC_SPAN) {
+    const to = from + RPC_SPAN - 1n < latest ? from + RPC_SPAN - 1n : latest;
+    for (const l of await pub.getLogs({ address: dep.registry, fromBlock: from, toBlock: to })) {
+      logs.push({ topics: l.topics, data: l.data, blockNumber: l.blockNumber, key: `${l.transactionHash}:${BigInt(l.logIndex)}` });
+    }
+  }
+  return logs;
+}
+
+async function registryLogs() {
+  const latest = await pub.getBlockNumber();
+  const start = BigInt(dep.deployedAtBlock);
+  const recentFrom = latest - RPC_SPAN + 1n > start ? latest - RPC_SPAN + 1n : start;
+  let older;
+  try {
+    older = await explorerLogs();
+  } catch {
+    older = recentFrom > start ? await rpcLogs(start, recentFrom - 1n) : [];
+  }
+  const merged = new Map(older.map((l) => [l.key, l]));
+  for (const l of await rpcLogs(recentFrom, latest)) merged.set(l.key, l);
+  return [...merged.values()].sort((a, b) => (a.blockNumber < b.blockNumber ? -1 : a.blockNumber > b.blockNumber ? 1 : 0));
+}
+
 async function loadBoard() {
   const body = $('#board');
   try {
-    const latest = await pub.getBlockNumber();
-    const logs = [];
-    for (let from = BigInt(dep.deployedAtBlock); from <= latest; from += 10_000n) {
-      const to = from + 9_999n < latest ? from + 9_999n : latest;
-      logs.push(...await pub.getLogs({ address: dep.registry, fromBlock: from, toBlock: to }));
-    }
+    const logs = await registryLogs();
     const rows = new Map();
     const row = (a) => rows.get(a) ?? rows.set(a, { enrolled: false, solved: [false, false], tries: [0, 0], last: 0n }).get(a);
     for (const log of logs) {
