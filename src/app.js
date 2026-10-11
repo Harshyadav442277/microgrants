@@ -142,7 +142,8 @@ async function refreshBalance() {
   ]);
   const el = $('#balance');
   el.hidden = false;
-  el.innerHTML = `<b>${formatUnits(wei, 18)}</b> native<br><b>${formatUnits(units, 6)}</b> token`;
+  el.textContent = `${formatUnits(wei, 18)} USDC`;
+  el.title = `Token view (6 decimals): ${formatUnits(units, 6)} USDC`;
 }
 
 async function refreshSolved() {
@@ -343,10 +344,15 @@ async function registryLogs() {
   return [...merged.values()].sort((a, b) => (a.blockNumber < b.blockNumber ? -1 : a.blockNumber > b.blockNumber ? 1 : 0));
 }
 
+// Each submission refreshes the board; a slow earlier refresh must not overwrite a newer one.
+let boardRequest = 0;
+
 async function loadBoard() {
   const body = $('#board');
+  const request = ++boardRequest;
   try {
     const logs = await registryLogs();
+    if (request !== boardRequest) return;
     const rows = new Map();
     const row = (a) => rows.get(a) ?? rows.set(a, { enrolled: false, solved: [false, false], tries: [0, 0], last: 0n }).get(a);
     for (const log of logs) {
@@ -369,6 +375,7 @@ async function loadBoard() {
       <td>${addrLink(a)}${builder[a.toLowerCase()] ? `<span class="tag">${builder[a.toLowerCase()]}</span>` : r.enrolled ? '<span class="tag">enrolled</span>' : ''}</td>
       ${cell(r, 0)}${cell(r, 1)}<td>${r.tries[0] + r.tries[1]}</td></tr>`).join('');
   } catch (e) {
+    if (request !== boardRequest) return;
     body.innerHTML = `<tr><td colspan="4">Could not read results from ${escape(net.name)}: ${escape(explain(e))}</td></tr>`;
   }
 }
