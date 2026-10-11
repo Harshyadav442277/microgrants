@@ -1,6 +1,6 @@
 # Project status
 
-Updated: **11 October 2026, 18:45 UTC (12 October, 00:15 IST)**. Deadline 15 October 2026, 03:59 UTC / 09:29 IST.
+Updated: **11 October 2026, 19:25 UTC (12 October, 00:55 IST)**. Deadline 15 October 2026, 03:59 UTC / 09:29 IST.
 
 | Area | State | Evidence / next step |
 | --- | --- | --- |
@@ -17,8 +17,8 @@ Updated: **11 October 2026, 18:45 UTC (12 October, 00:15 IST)**. Deadline 15 Oct
 | Mainnet journey (real wallet) | Exercise 1 FAIL recorded through MetaMask mobile | E27. Exercise 2 and PASS solutions not yet run on mainnet |
 | CI | Passing on GitHub | E22: repository checks, page build and 25 Arc Foundry tests |
 | Git | Branch `arc-lab` pushed; PR [#1](https://github.com/Harshyadav442277/microgrants/pull/1) into `main`, not merged | Repo renamed on GitHub to `microgrants` (old name redirects). Backups `arc-lab-backup-20261010`, `arc-lab-backup-20261010b` kept locally, not pushed |
-| Public-source requirement | Owner approved MIT license, merging PR #1 and making the repo public (12 Oct IST) | — |
-| Submission | Not submitted | [Checklist](SUBMISSION.md) |
+| Public-source requirement | Met: repo public, MIT, `main` holds Arc Lab (PR #1 merged as `d14c31b`) | — |
+| Submission | **Submitted** by the owner on DoraHacks, 11 Oct ~19:20 UTC (12 Oct ~00:50 IST); listed as "Under Review" | E28. Decisions by 21 Oct 2026 |
 
 ## Decisions already established
 
@@ -29,4 +29,4 @@ Updated: **11 October 2026, 18:45 UTC (12 October, 00:15 IST)**. Deadline 15 Oct
 
 ## Next action
 
-Owner: send 0.3–0.5 USDC from the deployer wallet to the registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1` on Arc mainnet (recoverable with `withdraw`), then run one journey on the hosted page with MetaMask and a new learner wallet; Claude labels that wallet as a builder wallet and records the hashes. Owner decisions before submitting: public repo and license, MetaMask check, builder profile, then submit on DoraHacks ([draft](SUBMISSION.md)). Target 13 October (IST).
+Submitted; await the decision (by 21 October). Optional before review: exercise 2 and PASS solutions on mainnet; fix the three MetaMask-mobile page bugs recorded in E27. Edits to the DoraHacks entry go through "Manage Submission".

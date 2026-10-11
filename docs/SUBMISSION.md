@@ -1,13 +1,13 @@
 # Submission preparation
 
-Status: **not ready; not submitted.** Source: [official Arc Microgrants page](https://dorahacks.io/hackathon/arc-microgrants/detail), checked 10 October 2026. Deadline: **15 October 2026, 03:59 UTC / 09:29 IST**; target 13 October (IST). The owner submits from their own account.
+Status: **submitted** by the owner on 11 October 2026, ~19:20 UTC (12 October, ~00:50 IST); shown as "Under Review" (E28). Source: [official Arc Microgrants page](https://dorahacks.io/hackathon/arc-microgrants/detail), checked 10 October 2026. Deadline: **15 October 2026, 03:59 UTC / 09:29 IST**; target 13 October (IST). The owner submits from their own account.
 
 ## Required artifacts
 
 - [x] Working Arc **mainnet** deployment and a reviewer-accessible link: contracts deployed and source verified (E25), [page](https://arc-lab-lemon.vercel.app) defaults to mainnet (E26). A mainnet learner journey is still to be run.
-- [ ] Public source repository. [Harshyadav442277/microgrants](https://github.com/Harshyadav442277/microgrants) is private; owner decides, and picks a license first.
+- [x] Public source repository: [Harshyadav442277/microgrants](https://github.com/Harshyadav442277/microgrants), MIT.
 - [x] Short description of what the project does and why it uses Arc (draft below).
-- [ ] Public builder profile: GitHub, X, or Farcaster (owner).
+- [x] Public builder profile: X, LinkedIn and GitHub links given by the owner on the form.
 - [ ] Owner confirms submission rights and eligibility declarations.
 - [ ] Owner confirms the project has not already received Circle/Arc funding.
 
