@@ -4,7 +4,7 @@
 
 **Live page:** https://arc-lab-lemon.vercel.app (Arc testnet).
 
-**Current state:** contracts written, 21 local tests passing, and the full grading run simulated against Arc mainnet state with nothing sent. Not deployed yet. See [PRD](PRD.md) and [STATUS](docs/STATUS.md).
+**Current state:** contracts and page built; 25 contract tests pass on the Arc EVM locally and in CI; deployed, source-verified and exercised end to end on Arc testnet. Not yet on mainnet. See [PRD](PRD.md), [STATUS](docs/STATUS.md) and [EVIDENCE](docs/EVIDENCE.md).
 
 ## Web page
 
