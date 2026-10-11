@@ -29,4 +29,4 @@ Updated: **11 October 2026, 19:25 UTC (12 October, 00:55 IST)**. Deadline 15 Oct
 
 ## Next action
 
-Submitted; await the decision (by 21 October). Optional before review: exercise 2 and PASS solutions on mainnet; fix the three MetaMask-mobile page bugs recorded in E27. Edits to the DoraHacks entry go through "Manage Submission".
+Submitted; await the decision (by 21 October). Optional before review: exercise 2 and PASS solutions on mainnet; re-check the E27 fixes (E29) on MetaMask mobile. Edits to the DoraHacks entry go through "Manage Submission".
