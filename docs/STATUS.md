@@ -1,6 +1,6 @@
 # Project status
 
-Updated: **11 October 2026, 11:50 UTC (17:20 IST)**. Deadline 15 October 2026, 03:59 UTC / 09:29 IST.
+Updated: **11 October 2026, 17:40 UTC (23:10 IST)**. Deadline 15 October 2026, 03:59 UTC / 09:29 IST.
 
 | Area | State | Evidence / next step |
 | --- | --- | --- |
@@ -13,8 +13,8 @@ Updated: **11 October 2026, 11:50 UTC (17:20 IST)**. Deadline 15 October 2026, 0
 | Testnet deployment | Deployed, source verified | E16, E17. Registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`; drip raised to 0.1 USDC (E19) |
 | Testnet journey (script) | Passed | E18: enrol → drip → PASS both, FAIL recorded |
 | Web page | Built; end-to-end test passes against Arc testnet | E20: Playwright, new learner enrolled from the page, both starters FAIL with explanations, both fixes PASS, board updated |
-| Hosting | Live at [arc-lab-lemon.vercel.app](https://arc-lab-lemon.vercel.app), Arc testnet | E24 |
-| Mainnet product | Not deployed | Deployer holds 0 mainnet USDC (11 Oct 11:16 UTC). Needs about 1 USDC: ≈0.063 deployment + 0.1 per learner |
+| Hosting | Live at [arc-lab-lemon.vercel.app](https://arc-lab-lemon.vercel.app), defaults to Arc mainnet; `?network=testnet` for the rehearsal | E24, E26 |
+| Mainnet deployment | Deployed and source verified (Sourcify, exact match), block 25445558; same addresses as testnet | E25. Fees 0.0624 USDC; deployer holds 1.7175 USDC. Registry not funded yet, so no drip; no mainnet learner journey yet |
 | CI | Passing on GitHub | E22: repository checks, page build and 25 Arc Foundry tests |
 | Git | Branch `arc-lab` pushed; PR [#1](https://github.com/Harshyadav442277/microgrants/pull/1) into `main`, not merged | Repo renamed on GitHub to `microgrants` (old name redirects). Backups `arc-lab-backup-20261010`, `arc-lab-backup-20261010b` kept locally, not pushed |
 | Public-source requirement | Unresolved | Repo private; owner decision before submission |
@@ -29,4 +29,4 @@ Updated: **11 October 2026, 11:50 UTC (17:20 IST)**. Deadline 15 October 2026, 0
 
 ## Next action
 
-Owner: send about 1 USDC on Arc mainnet to `0x87E6832fB971A29b4228Ccf6A558f27822c063ED`. Then: deploy to mainnet, verify source, add mainnet to `config/deployments.json`, redeploy the page, run one journey on mainnet. Owner decisions before submitting: public repo and license, MetaMask check, builder profile, then submit on DoraHacks ([draft](SUBMISSION.md)). Target 13 October (IST).
+Owner: send 0.3–0.5 USDC from the deployer wallet to the registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1` on Arc mainnet (recoverable with `withdraw`), then run one journey on the hosted page with MetaMask and a new learner wallet; Claude labels that wallet as a builder wallet and records the hashes. Owner decisions before submitting: public repo and license, MetaMask check, builder profile, then submit on DoraHacks ([draft](SUBMISSION.md)). Target 13 October (IST).

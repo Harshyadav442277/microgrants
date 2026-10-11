@@ -4,7 +4,7 @@ Status: **not ready; not submitted.** Source: [official Arc Microgrants page](ht
 
 ## Required artifacts
 
-- [ ] Working Arc **mainnet** deployment and a reviewer-accessible link. Testnet is live ([page](https://arc-lab-lemon.vercel.app), E16–E23); mainnet waits on the deployer wallet being funded.
+- [x] Working Arc **mainnet** deployment and a reviewer-accessible link: contracts deployed and source verified (E25), [page](https://arc-lab-lemon.vercel.app) defaults to mainnet (E26). A mainnet learner journey is still to be run.
 - [ ] Public source repository. [Harshyadav442277/microgrants](https://github.com/Harshyadav442277/microgrants) is private; owner decides, and picks a license first.
 - [x] Short description of what the project does and why it uses Arc (draft below).
 - [ ] Public builder profile: GitHub, X, or Farcaster (owner).
@@ -21,8 +21,8 @@ Status: **not ready; not submitted.** Source: [official Arc Microgrants page](ht
 | Challenges | **Books that balance**: native USDC (18 decimals) and the USDC token (6 decimals) are one balance; a token transfer credits a contract without running its code, and the token view floors dust. **Post-quantum signature**: the learner signs with their own SLH-DSA-SHA2-128s key in the browser and deploys a verifier that must use Arc's precompile. |
 | Why Arc | Both checkers rely on behaviour only Arc has: the shared 18/6-decimal USDC balance and the SLH-DSA verifier precompile. On another chain neither checker can run. |
 | Who it is for | University blockchain clubs and Arc workshops that want a hands-on exercise with a result that can be checked. |
-| Live deployment URL | https://arc-lab-lemon.vercel.app (testnet now; mainnet after deployment) |
-| Contracts | Testnet: registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`, source verified. Mainnet: pending |
+| Live deployment URL | https://arc-lab-lemon.vercel.app (Arc mainnet; `?network=testnet` for the rehearsal) |
+| Contracts | Arc mainnet and testnet, same addresses: registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`, checkers `0x73a3c3FA009767E8515F39E852764bdcdBBa540a` and `0x54db435c807a89A2cC1209012431C465dd541323`; source verified (mainnet on Sourcify) |
 | Public source URL | Pending owner decision |
 | Builder profile | Owner to choose |
 | Verification | 25 contract tests on the Arc EVM (Arc Foundry, testnet fork, no mocks) passing locally and in GitHub Actions; mainnet `eth_call` simulation; Playwright journey through the page on Arc testnet |
@@ -30,7 +30,8 @@ Status: **not ready; not submitted.** Source: [official Arc Microgrants page](ht
 
 ## Before submitting
 
-- [ ] Mainnet: deploy, verify source on the mainnet explorer, add to `config/deployments.json`, redeploy the page, run one learner journey on mainnet, record hashes in [EVIDENCE](EVIDENCE.md).
+- [x] Mainnet: deploy, verify source (Sourcify), add to `config/deployments.json`, redeploy the page (E25, E26).
+- [ ] Mainnet: owner funds the registry and runs one learner journey with MetaMask; record hashes in [EVIDENCE](EVIDENCE.md).
 - [ ] Repository: review the public content (planning documents, competition notes), choose a license, then make it public.
 - [ ] Manual check with a real browser wallet (MetaMask) on the hosted page.
 - [ ] Re-read the live program page for changed rules and form fields.

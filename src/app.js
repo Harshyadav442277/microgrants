@@ -393,7 +393,9 @@ function bytesToHex(bytes) {
 // ---------- start ----------
 $('#network').textContent = net.name;
 if (netName === 'testnet') notice('This is the Arc Testnet rehearsal. Gas is paid in test USDC from faucet.circle.com, or ask the instructor to enrol you.');
-$('#contracts').innerHTML = `Contracts on ${escape(net.name)}: registry ${addrLink(dep.registry)}, ${dep.challenges.map((c) => `${escape(c.name)} checker ${addrLink(c.checker)}`).join(', ')}. Source verified on the explorer.`;
+$('#contracts').innerHTML = `Contracts on ${escape(net.name)}: registry ${addrLink(dep.registry)}, ${dep.challenges.map((c) => `${escape(c.name)} checker ${addrLink(c.checker)}`).join(', ')}. ${netName === 'mainnet'
+  ? `Source verified on <a href="https://repo.sourcify.dev/${net.chainId}/${dep.registry}" target="_blank" rel="noopener">Sourcify</a>.`
+  : 'Source verified on the explorer.'}`;
 for (const key of Object.keys(starters)) $(`[data-source="${key}"]`).textContent = starters[key].source;
 
 $('#connect').addEventListener('click', () => connect().catch((e) => notice(explain(e))));
