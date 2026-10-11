@@ -1,6 +1,6 @@
 # Project status
 
-Updated: **10 October 2026, 19:45 UTC (11 October, 01:15 IST)**. Deadline 15 October 2026, 03:59 UTC / 09:29 IST.
+Updated: **11 October 2026, 11:50 UTC (17:20 IST)**. Deadline 15 October 2026, 03:59 UTC / 09:29 IST.
 
 | Area | State | Evidence / next step |
 | --- | --- | --- |
@@ -13,10 +13,10 @@ Updated: **10 October 2026, 19:45 UTC (11 October, 01:15 IST)**. Deadline 15 Oct
 | Testnet deployment | Deployed, source verified | E16, E17. Registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`; drip raised to 0.1 USDC (E19) |
 | Testnet journey (script) | Passed | E18: enrol → drip → PASS both, FAIL recorded |
 | Web page | Built; end-to-end test passes against Arc testnet | E20: Playwright, new learner enrolled from the page, both starters FAIL with explanations, both fixes PASS, board updated |
-| Hosting | Not hosted | Needs owner yes for a public URL |
-| Mainnet product | Not deployed | Needs mainnet USDC in the deployer wallet and owner yes (≈0.063 USDC deployment + 0.1 USDC per learner) |
-| CI | Repository checks, page build and Arc Foundry contract tests defined | Never run on GitHub: branch `arc-lab` not pushed |
-| Git | Branch `arc-lab`, not pushed; `main` untouched | Backup of the pre-rewrite history kept locally as `arc-lab-backup-20261010` |
+| Hosting | Live at [arc-lab-lemon.vercel.app](https://arc-lab-lemon.vercel.app), Arc testnet | E24 |
+| Mainnet product | Not deployed | Deployer holds 0 mainnet USDC (11 Oct 11:16 UTC). Needs about 1 USDC: ≈0.063 deployment + 0.1 per learner |
+| CI | Passing on GitHub | E22: repository checks, page build and 25 Arc Foundry tests |
+| Git | Branch `arc-lab` pushed; PR [#1](https://github.com/Harshyadav442277/microgrants/pull/1) into `main`, not merged | Repo renamed on GitHub to `microgrants` (old name redirects). Backups `arc-lab-backup-20261010`, `arc-lab-backup-20261010b` kept locally, not pushed |
 | Public-source requirement | Unresolved | Repo private; owner decision before submission |
 | Submission | Not submitted | [Checklist](SUBMISSION.md) |
 
@@ -29,4 +29,4 @@ Updated: **10 October 2026, 19:45 UTC (11 October, 01:15 IST)**. Deadline 15 Oct
 
 ## Next action
 
-Owner: say yes to hosting the page (Vercel) and to the mainnet deployment once the deployer wallet holds about 1 USDC on Arc mainnet. Then: deploy to mainnet, add it to `config/deployments.json`, run the journey on mainnet, host, and prepare the submission. Target submission 13 October (IST).
+Owner: send about 1 USDC on Arc mainnet to `0x87E6832fB971A29b4228Ccf6A558f27822c063ED`. Then: deploy to mainnet, verify source, add mainnet to `config/deployments.json`, redeploy the page, run one journey on mainnet. Owner decisions before submitting: public repo and license, MetaMask check, builder profile, then submit on DoraHacks ([draft](SUBMISSION.md)). Target 13 October (IST).

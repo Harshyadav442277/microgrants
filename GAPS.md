@@ -22,9 +22,11 @@ Last updated: **11 October 2026 (IST)**. This list names blockers rather than tr
 | Mainnet spend estimate | Measured on testnet (E16): deployment used 3,142,497 gas (dry run estimated 4,108,837), ≈ 0.063 USDC at the 20 gwei mainnet floor. Plus 0.05 USDC drip per learner and 0.0001 USDC checker float | Owner yes before mainnet |
 | Browser SLH-DSA signing time | 2.4 s in desktop Chromium (E21). Untested on phones | Manual phone check |
 | Real wallet extension | Page tested only through a Node bridge, not MetaMask or another extension | Manual run before submission |
-| Hosting | Page not hosted; Vercel CLI logged in as `harshyadav442277`, no project created | Owner yes for a public URL |
+| Hosting | Closed: live at https://arc-lab-lemon.vercel.app (E24) | — |
+| Public RPC and explorer rate limits | Testnet RPC returns code -32005 under bursts; explorer API 10 requests per window per IP (E23). Page backs off and falls back; a busy workshop on one network (one IP) could still hit them | Watch during the mainnet journey; a keyed RPC would remove it |
+| Mainnet funding | Deployer holds 0 mainnet USDC (11 Oct 11:16 UTC) | Owner |
 | Arc Foundry | Closed: v0.8.0-2 installed in WSL with owner's yes; tests run on the Arc EVM (E15) | — |
-| CI contract job | Added (installs Arc Foundry from the checksummed archive); never run on GitHub | First push of `arc-lab` |
+| CI contract job | Closed: passing on GitHub (E22) | — |
 | Source license | Contracts marked `UNLICENSED` | Owner, before going public |
 | External-model critique of the chosen idea | Not run (HF out of credit, GitHub Models blocked locally, `claude` CLI login expired) | Before freeze |
 | Real learners for the lab | None recruited | 12 October |

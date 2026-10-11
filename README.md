@@ -2,6 +2,8 @@
 
 **Arc Lab**: a graded lab for [Arc](https://docs.arc.io/). Each challenge is one thing Arc does differently from Ethereum; checker contracts on Arc grade each learner's deployment and record the result on-chain. Built for [Arc Microgrants | Circle](https://dorahacks.io/hackathon/arc-microgrants/detail).
 
+**Live page:** https://arc-lab-lemon.vercel.app (Arc testnet).
+
 **Current state:** contracts written, 21 local tests passing, and the full grading run simulated against Arc mainnet state with nothing sent. Not deployed yet. See [PRD](PRD.md) and [STATUS](docs/STATUS.md).
 
 ## Web page

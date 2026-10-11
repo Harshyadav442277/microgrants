@@ -1,43 +1,42 @@
 # Submission preparation
 
-Status: **not ready; not submitted**. Source: [official Arc Microgrants page](https://dorahacks.io/hackathon/arc-microgrants/detail), checked 8 October 2026. Deadline: **15 October 2026, 09:29 IST**; internal target is 14 October, 18:00 IST.
+Status: **not ready; not submitted.** Source: [official Arc Microgrants page](https://dorahacks.io/hackathon/arc-microgrants/detail), checked 10 October 2026. Deadline: **15 October 2026, 03:59 UTC / 09:29 IST**; target 13 October (IST). The owner submits from their own account.
 
 ## Required artifacts
 
-- [ ] Working Arc mainnet deployment and a reviewer-accessible link.
-- [ ] Public source repository satisfying the organizer's requirement.
-- [ ] Short description of what the project does and why it uses Arc.
-- [ ] Public builder profile: GitHub, X, or Farcaster.
-- [ ] Owner confirms submission rights and relevant eligibility declarations.
-- [ ] Owner confirms the project has not already received Circle/Arc funding covered by the exclusion.
-
-This repository remains private. Publishing it, preparing a distinct reviewed public submission repository, or seeking an organizer exception remains a later owner decision. Do not treat private collaborator access as equivalent to a public repo.
-
-## Supporting evidence we should prepare
-
-- [ ] Exact demo steps and expected outputs in [DEMO](../DEMO.md).
-- [ ] Fresh-checkout setup and meaningful application/contract checks.
-- [ ] Network identity, deployed addresses where relevant, transaction receipts or reproducible mainnet reads.
-- [ ] Accurate limitations and any external-service requirements.
-- [ ] Reuse attribution, source revisions, and license decisions.
-- [ ] Optional short recording/screenshots; no video requirement is confirmed from the detail page.
-- [ ] Final check of live program dates and any additional submission-form fields.
+- [ ] Working Arc **mainnet** deployment and a reviewer-accessible link. Testnet is live ([page](https://arc-lab-lemon.vercel.app), E16–E23); mainnet waits on the deployer wallet being funded.
+- [ ] Public source repository. [Harshyadav442277/microgrants](https://github.com/Harshyadav442277/microgrants) is private; owner decides, and picks a license first.
+- [x] Short description of what the project does and why it uses Arc (draft below).
+- [ ] Public builder profile: GitHub, X, or Farcaster (owner).
+- [ ] Owner confirms submission rights and eligibility declarations.
+- [ ] Owner confirms the project has not already received Circle/Arc funding.
 
 ## Draft description fields
 
 | Field | Draft |
 | --- | --- |
-| Project title | Pending idea selection |
-| What it does | Pending |
-| Target beneficiary and useful result | Pending |
-| Arc contribution | Pending |
-| Live deployment URL | None |
-| Public source URL | None; private preparation repo only |
+| Project title | Arc Lab |
+| One line | Graded challenges on the things Arc does differently from Ethereum, checked by contracts on Arc. |
+| What it does | Each challenge is one Arc behaviour. A learner deploys the deliberately wrong starter contract from the page, submits it, and reads why the checker contract failed it; then fixes it in their own tools and submits again. The checker grades the deployment on Arc and the registry records PASS or FAIL as an on-chain event that anyone can verify. An instructor enrols a class, and each enrolled learner receives 0.1 USDC for gas, so a learner can start with no USDC. |
+| Challenges | **Books that balance**: native USDC (18 decimals) and the USDC token (6 decimals) are one balance; a token transfer credits a contract without running its code, and the token view floors dust. **Post-quantum signature**: the learner signs with their own SLH-DSA-SHA2-128s key in the browser and deploys a verifier that must use Arc's precompile. |
+| Why Arc | Both checkers rely on behaviour only Arc has: the shared 18/6-decimal USDC balance and the SLH-DSA verifier precompile. On another chain neither checker can run. |
+| Who it is for | University blockchain clubs and Arc workshops that want a hands-on exercise with a result that can be checked. |
+| Live deployment URL | https://arc-lab-lemon.vercel.app (testnet now; mainnet after deployment) |
+| Contracts | Testnet: registry `0x6789b2C87Af7A524A805C6bA234236f5F5E54Aa1`, source verified. Mainnet: pending |
+| Public source URL | Pending owner decision |
 | Builder profile | Owner to choose |
-| Verification / limits | Scaffold checks only; no product deployed |
+| Verification | 25 contract tests on the Arc EVM (Arc Foundry, testnet fork, no mocks) passing locally and in GitHub Actions; mainnet `eth_call` simulation; Playwright journey through the page on Arc testnet |
+| Limits to state | Every learner so far is a builder-controlled test wallet, labelled as such on the board. Tested in Chromium through a wallet bridge, not yet with MetaMask or on a phone. Public Arc RPC and explorer rate-limit bursts; the page backs off and falls back. |
+
+## Before submitting
+
+- [ ] Mainnet: deploy, verify source on the mainnet explorer, add to `config/deployments.json`, redeploy the page, run one learner journey on mainnet, record hashes in [EVIDENCE](EVIDENCE.md).
+- [ ] Repository: review the public content (planning documents, competition notes), choose a license, then make it public.
+- [ ] Manual check with a real browser wallet (MetaMask) on the hosted page.
+- [ ] Re-read the live program page for changed rules and form fields.
 
 ## Submission evidence
 
-An account page, draft, registration, or clicked button is not a submitted entry. After the owner submits, retain the visible confirmation, entry URL/identifier, submission time, deployed revision, and any later requested action in [STATUS](STATUS.md) and [EVIDENCE](EVIDENCE.md).
+An account page, draft, registration, or clicked button is not a submitted entry. After the owner submits, record the visible confirmation, entry URL, submission time and deployed revision in [STATUS](STATUS.md) and [EVIDENCE](EVIDENCE.md).
 
 Selected recipients may need private payout verification and an Arc-compatible wallet. Do not store verification documents or recovery credentials in this repository.
