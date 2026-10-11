@@ -97,13 +97,41 @@ function explain(err) {
 // ---------- wallet ----------
 const state = { account: null, wallet: null, signature: null, deployed: {} };
 
+// Per-browser conveniences only; the page works the same when storage is blocked.
+const store = {
+  get(key) { try { return JSON.parse(localStorage.getItem(key) ?? 'null'); } catch { return null; } },
+  set(key, value) { try { if (value == null) localStorage.removeItem(key); else localStorage.setItem(key, JSON.stringify(value)); } catch { /* storage blocked */ } },
+};
+const CONNECTED = 'arclab:connected';
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// MetaMask mobile can inject window.ethereum after this script runs, answers eth_accounts with [] for a moment
+// after load or after approving a connection, and reloads the page when it returns from a confirmation screen.
+function waitForProvider(ms) {
+  if (window.ethereum) return Promise.resolve(window.ethereum);
+  return new Promise((resolve) => {
+    const done = () => { clearInterval(poll); clearTimeout(timer); resolve(window.ethereum ?? null); };
+    const poll = setInterval(() => window.ethereum && done(), 100);
+    const timer = setTimeout(done, ms);
+    window.addEventListener('ethereum#initialized', done, { once: true });
+  });
+}
+
+async function currentAccount(tries) {
+  for (let i = 1; ; i++) {
+    const [account] = await window.ethereum.request({ method: 'eth_accounts' });
+    if (account || i >= tries) return account ?? null;
+    await sleep(500);
+  }
+}
+
 async function connect() {
-  if (!window.ethereum) {
+  if (!(await waitForProvider(1000))) {
     notice('No browser wallet found. Install one, such as MetaMask, to deploy and submit. You can still read the challenges and the results.');
     return;
   }
   const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-  await useAccount(account);
+  await useAccount(account ?? (await currentAccount(6)));
 }
 
 async function ensureChain() {
@@ -130,8 +158,9 @@ async function useAccount(account) {
   state.account = getAddress(account);
   state.wallet = createWalletClient({ account: state.account, chain, transport: custom(window.ethereum) });
   if (state.signature && state.signature.learner !== state.account) state.signature = null;
+  store.set(CONNECTED, true);
   render();
-  await Promise.all([refreshBalance(), refreshSolved(), refreshInstructor()]);
+  await Promise.all([refreshBalance(), refreshSolved(), refreshInstructor(), resumePending()]);
 }
 
 async function refreshBalance() {
@@ -142,8 +171,33 @@ async function refreshBalance() {
   ]);
   const el = $('#balance');
   el.hidden = false;
-  el.textContent = `${formatUnits(wei, 18)} USDC`;
-  el.title = `Token view (6 decimals): ${formatUnits(units, 6)} USDC`;
+  el.textContent = `${usdc(wei, 4)} USDC`;
+  el.title = `Native balance (18 decimals): ${formatUnits(wei, 18)} USDC. Token view (6 decimals): ${formatUnits(units, 6)} USDC`;
+}
+
+// A transaction the page is waiting on is remembered per network and account, so a reload (which MetaMask
+// mobile does after a confirmation) still shows its result.
+const pendingKey = () => `arclab:pending:${net.chainId}:${state.account}`;
+const validPending = (p) => /^0x[0-9a-f]{64}$/i.test(p?.hash)
+  && ((p.kind === 'deploy' && p.key in starters) || (p.kind === 'submit' && dep.challenges.some((c) => c.id === p.key)));
+const pendingList = () => [store.get(pendingKey())].flat().filter(validPending);
+const forgetPending = (hash) => store.set(pendingKey(), pendingList().filter((p) => p.hash !== hash));
+
+async function resumePending() {
+  for (const p of pendingList()) {
+    const out = p.kind === 'deploy' ? $(`[data-deploy-result="${p.key}"]`) : $(`[data-verdict="${p.key}"]`);
+    if (!out) { forgetPending(p.hash); continue; }
+    out.innerHTML = `Waiting for the transaction sent before the page reloaded: ${txLink(p.hash)}`;
+    try {
+      const receipt = await pub.waitForTransactionReceipt({ hash: p.hash, timeout: 120_000 });
+      if (receipt.status !== 'success') throw new Error('The transaction reverted.');
+      if (p.kind === 'deploy') showDeployed(p.key, receipt);
+      else showVerdict(p.key, receipt);
+    } catch (e) {
+      out.innerHTML = `${escape(explain(e))} ${txLink(p.hash)}`;
+    }
+    forgetPending(p.hash);
+  }
 }
 
 async function refreshSolved() {
@@ -181,11 +235,13 @@ function setStatus(id, s, text) {
 }
 
 // ---------- actions ----------
-async function send(fn, out, pending) {
+async function send(fn, out, pending, resume) {
   out.innerHTML = 'Confirm in your wallet…';
+  let hash;
   try {
     await ensureChain();
-    const hash = await fn();
+    hash = await fn();
+    if (resume) store.set(pendingKey(), [...pendingList(), { ...resume, hash }]);
     out.innerHTML = `${pending} ${txLink(hash)}`;
     const receipt = await pub.waitForTransactionReceipt({ hash });
     if (receipt.status !== 'success') throw new Error('The transaction reverted.');
@@ -194,6 +250,7 @@ async function send(fn, out, pending) {
     out.textContent = explain(e);
     return null;
   } finally {
+    if (hash && resume) forgetPending(hash);
     refreshBalance();
   }
 }
@@ -203,9 +260,13 @@ async function deployStarter(key) {
   const out = $(`[data-deploy-result="${key}"]`);
   const receipt = await send(
     () => state.wallet.deployContract({ abi: starter.abi, bytecode: starter.bytecode, args: [state.account] }),
-    out, 'Deploying…',
+    out, 'Deploying…', { kind: 'deploy', key },
   );
-  if (!receipt) return;
+  if (receipt) showDeployed(key, receipt);
+}
+
+function showDeployed(key, receipt) {
+  const out = $(`[data-deploy-result="${key}"]`);
   const address = receipt.contractAddress;
   state.deployed[key] = address;
   out.innerHTML = `Deployed at ${addrLink(address, address)} (${txLink(receipt.transactionHash)}). It is filled in below.`;
@@ -243,10 +304,15 @@ async function submit(form) {
   }
   const receipt = await send(
     () => state.wallet.writeContract({ address: dep.registry, abi: registryAbi, functionName: 'submit', args: [BigInt(id), getAddress(input), data] }),
-    out, 'Grading on Arc…',
+    out, 'Grading on Arc…', { kind: 'submit', key: id },
   );
-  if (!receipt) return;
+  if (receipt) showVerdict(id, receipt);
+}
+
+function showVerdict(id, receipt) {
+  const out = $(`[data-verdict="${id}"]`);
   const ev = receipt.logs.map(tryDecode).find((e) => e?.eventName === 'Submitted');
+  if (!ev) { out.innerHTML = `This ${txLink(receipt.transactionHash)} recorded no grading result.`; return; }
   const [title, body] = VERDICTS[id][ev.args.code] ?? ['Result', `Code ${ev.args.code}`];
   out.dataset.state = ev.args.passed ? 'pass' : 'fail';
   out.innerHTML = `<strong>${title}</strong><p>${escape(body)}</p><p class="small">Recorded on Arc in ${txLink(receipt.transactionHash, 'this transaction')}.</p>`;
@@ -409,9 +475,17 @@ $$('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
   b.textContent = 'Copied';
 }));
 
-if (window.ethereum) {
-  window.ethereum.on?.('accountsChanged', ([a]) => useAccount(a));
-  window.ethereum.request({ method: 'eth_accounts' }).then(([a]) => a && useAccount(a)).catch(() => {});
-}
+// Reconnect without a prompt when the wallet already allows this site. After a reload that followed a
+// connection, keep asking for a few seconds; a fresh visitor gets one quiet check.
+waitForProvider(3000).then(async (provider) => {
+  if (!provider) return;
+  provider.on?.('accountsChanged', async ([a]) => {
+    const account = a ?? (await currentAccount(2)); // MetaMask mobile can report [] in passing
+    if (!account) store.set(CONNECTED, null);
+    useAccount(account);
+  });
+  const account = await currentAccount(store.get(CONNECTED) ? 6 : 1);
+  if (account && !state.account) useAccount(account);
+}).catch(() => {});
 render();
 loadBoard();

@@ -134,7 +134,7 @@ test('a new learner completes both challenges from the page', async ({ browser }
   await attachWallet(lp, learner);
   await lp.goto('/?network=testnet');
   await lp.getByRole('button', { name: 'Connect wallet' }).click();
-  await expect(lp.locator('#balance')).toContainText('0.1 USDC');
+  await expect(lp.locator('#balance')).toHaveText('0.1000 USDC');
 
   // Books that balance: starter fails, fix passes.
   await lp.getByRole('button', { name: 'Deploy starter vault' }).click();
