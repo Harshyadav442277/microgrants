@@ -7,7 +7,7 @@
 // Run: node --env-file=.env.local node_modules/@playwright/test/cli.js test
 // Needs DEPLOYER_PRIVATE_KEY (registry owner, funded on testnet) and the compiled solutions (FOUNDRY_OUT).
 import { test, expect } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { createPublicClient, createWalletClient, http, parseAbi, toHex } from 'viem';
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
@@ -16,14 +16,27 @@ const networks = JSON.parse(readFileSync('config/arc-networks.json', 'utf8')).ne
 const dep = JSON.parse(readFileSync('config/deployments.json', 'utf8')).testnet;
 const net = networks.testnet;
 const chain = { id: net.chainId, name: net.name, nativeCurrency: net.nativeCurrency, rpcUrls: { default: { http: [net.rpcUrl] } } };
-const pub = createPublicClient({ chain, transport: http(net.rpcUrl) });
+const pub = createPublicClient({ chain, transport: http(net.rpcUrl, { retryCount: 6, retryDelay: 1000 }) });
 const forgeOut = process.env.FOUNDRY_OUT ?? 'contracts/out';
 const artifact = (name) => JSON.parse(readFileSync(path.join(forgeOut, 'Solutions.sol', `${name}.json`), 'utf8'));
 
+// Records each RPC method the bridge sends, so a failure shows which call the node refused.
+const trace = [];
+const traced = http(net.rpcUrl, {
+  retryCount: 6,
+  retryDelay: 1000,
+  onFetchRequest: async (req) => {
+    try {
+      const body = await req.clone().json();
+      trace.push([body].flat().map((b) => b.method).join('+'));
+    } catch { /* not JSON */ }
+  },
+});
+
 async function attachWallet(page, account) {
-  const wallet = createWalletClient({ chain, transport: http(net.rpcUrl), account });
+  const wallet = createWalletClient({ chain, transport: traced, account });
   let approved = false; // like a real wallet: no accounts until the user connects
-  await page.exposeFunction('__arcLabRpc', async (method, params) => {
+  const handle = async (method, params) => {
     switch (method) {
       case 'eth_requestAccounts':
         approved = true;
@@ -37,15 +50,46 @@ async function attachWallet(page, account) {
         return null;
       case 'eth_sendTransaction': {
         const [tx] = params;
-        return wallet.sendTransaction({
+        const base = {
+          account,
           to: tx.to ?? undefined,
           data: tx.data ?? tx.input,
           value: tx.value ? BigInt(tx.value) : undefined,
-          gas: tx.gas ? BigInt(tx.gas) : undefined,
-        });
+        };
+        // The public testnet RPC intermittently answers "Request exceeds defined limit"; retry as a wallet would.
+        for (let attempt = 1; ; attempt++) {
+          trace.length = 0;
+          try {
+            // Filling nonce, gas and fees here keeps viem from trying eth_fillTransaction, which Arc does not serve.
+            const [nonce, gas, block] = await Promise.all([
+              pub.getTransactionCount({ address: account.address, blockTag: 'pending' }),
+              tx.gas ? BigInt(tx.gas) : pub.estimateGas(base).then((g) => (g * 12n) / 10n),
+              pub.getBlock(),
+            ]);
+            const tip = 1_000_000_000n;
+            return await wallet.sendTransaction({
+              ...base, chainId: chain.id, nonce, gas,
+              maxPriorityFeePerGas: tip, maxFeePerGas: block.baseFeePerGas * 2n + tip,
+            });
+          } catch (e) {
+            console.error(`attempt ${attempt}: ${e.details ?? e.shortMessage} (code ${e.code ?? e.cause?.code}) after ${trace.join(' → ')}`);
+            if (attempt === 4 || !/exceeds defined limit/i.test(`${e.details} ${e.message}`)) throw e;
+            await new Promise((r) => setTimeout(r, 5000 * attempt));
+          }
+        }
       }
       default:
         return pub.request({ method, params });
+    }
+  };
+  await page.exposeFunction('__arcLabRpc', async (method, params) => {
+    try {
+      return await handle(method, params);
+    } catch (e) {
+      console.error(`wallet bridge ${method} failed: ${e.shortMessage ?? e.message}
+${e.details ?? ''}
+params: ${JSON.stringify(params, (k, v) => (typeof v === 'string' && v.length > 80 ? `${v.slice(0, 20)}…(${v.length})` : v))}`);
+      throw e;
     }
   });
   await page.addInitScript(() => {
@@ -53,9 +97,16 @@ async function attachWallet(page, account) {
   });
 }
 
+// Every test learner is a builder-controlled wallet: record it before it transacts so the results board labels it.
+function labelAsBuilder(address) {
+  const all = JSON.parse(readFileSync('config/deployments.json', 'utf8'));
+  all.testnet.builderWallets[address] = 'builder end-to-end test learner';
+  writeFileSync('config/deployments.json', JSON.stringify(all, null, 2) + '\n');
+}
+
 async function deployFix(account, name) {
   const a = artifact(name);
-  const wallet = createWalletClient({ chain, transport: http(net.rpcUrl), account });
+  const wallet = createWalletClient({ chain, transport: traced, account });
   const hash = await wallet.deployContract({ abi: a.abi, bytecode: a.bytecode.object, args: [account.address] });
   return (await pub.waitForTransactionReceipt({ hash })).contractAddress;
 }
@@ -65,6 +116,7 @@ test('a new learner completes both challenges from the page', async ({ browser }
   const instructor = privateKeyToAccount(process.env.DEPLOYER_PRIVATE_KEY);
   const learner = privateKeyToAccount(generatePrivateKey());
   console.log(`learner ${learner.address}`);
+  labelAsBuilder(learner.address);
   expect(await pub.getBalance({ address: learner.address })).toBe(0n);
 
   // Instructor enrols the learner from the instructor panel.
